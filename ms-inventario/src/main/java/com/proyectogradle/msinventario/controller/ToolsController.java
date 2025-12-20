@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController // Indica que esta clase maneja peticiones HTTP
 @RequestMapping("/api/tools") // La dirección base será http://localhost:8080/api/tools
 public class ToolsController {
@@ -56,4 +58,43 @@ public class ToolsController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno: " + e.getMessage());
         }
     }
+
+    // Simulación de Base de datos en memoria para probar rápido
+    private int stockSimulado = 5;
+
+    // Endpoint que llama tu RF2.2
+    // responde si hay stock (>0) (true o false)
+    @GetMapping("/{id}/availability")
+    public boolean checkAvailability(@PathVariable String id) {
+        System.out.println("MS1: Verificando stock de la herramienta " + id);
+        return stockSimulado > 0;
+    }
+
+    // Endpoint que llama tu RF2.1 y RF2.3
+    @PostMapping("/movement")
+    public void registerMovement(@RequestBody Map<String, Object> payload) {
+        String type = (String) payload.get("type");
+        System.out.println("MS1: Recibido movimiento tipo: " + type);
+
+        if ("LOAN".equals(type)) {
+            stockSimulado--;
+            System.out.println("MS1: Stock descontado. Nuevo stock: " + stockSimulado);
+        } else if ("RETURN".equals(type)) {
+            stockSimulado++;
+            System.out.println("MS1: Stock aumentado. Nuevo stock: " + stockSimulado);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

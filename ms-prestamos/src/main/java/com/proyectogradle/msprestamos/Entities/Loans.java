@@ -18,7 +18,8 @@ public class Loans {
 
     @Column(name = "customers_id")
     private String customerId;
-
+    @Column(name = "client_id")
+    private String clientId;
     @Column(name = "delivery_date")
     @Temporal(TemporalType.DATE)
     private Date deliveryDate;
@@ -97,5 +98,13 @@ public class Loans {
 
     public void setFine(Float fine) {
         this.fine = fine;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 }

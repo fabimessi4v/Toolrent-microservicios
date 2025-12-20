@@ -20,6 +20,10 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web' // add web starter for RestTemplate and web utilities
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // add JPA starter to provide JpaRepository
+	runtimeOnly 'com.h2database:h2' // add H2 for a simple in-memory DB during development
+	implementation 'mysql:mysql-connector-java:8.0.33'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
