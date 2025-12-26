@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '4.0.0'
+	id 'org.springframework.boot' version '3.2.9'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -18,10 +18,22 @@ repositories {
 	mavenCentral()
 }
 
+// Gestionar versiones de Spring Cloud con BOM
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.5"
+	}
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web' // add web starter for RestTemplate and web utilities
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // add JPA starter to provide JpaRepository
+	// Spring Cloud LoadBalancer para @LoadBalanced
+	implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+	// Eureka Client (opcional, pero recomendado si usas discovery + @LoadBalanced)
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
 	runtimeOnly 'com.h2database:h2' // add H2 for a simple in-memory DB during development
 	implementation 'mysql:mysql-connector-java:8.0.33'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

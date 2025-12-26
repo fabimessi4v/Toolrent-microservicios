@@ -1,0 +1,101 @@
+################################################################################
+# DOCUMENTO 1: Deployment del API Gateway
+# Crea el Pod que ejecuta el gateway (Spring Cloud Gateway) dentro del cluster.
+################################################################################
+
+# Versión de API para Deployments
+apiVersion: apps/v1
+
+# Tipo de recurso
+kind: Deployment
+
+# Metadatos del Deployment
+metadata:
+  # Nombre del Deployment
+  name: api-gateway
+
+# Especificación del Deployment
+spec:
+  # Número de Pods (réplicas)
+  replicas: 1
+
+  # Selector: identifica los Pods del Deployment
+  selector:
+    # Debe coincidir con template.metadata.labels
+    matchLabels:
+      # Label principal
+      app: api-gateway
+
+  # Template del Pod
+  template:
+    # Metadatos del Pod
+    metadata:
+      # Labels del Pod
+      labels:
+        # Label que usará el Service para seleccionar este Pod
+        app: api-gateway
+
+    # Especificación del Pod
+    spec:
+      # Contenedores del Pod
+      containers:
+      # Contenedor del gateway
+      - name: api-gateway
+
+        # Imagen Docker del gateway (REEMPLAZA con tu repo real)
+        image: tu_usuario/api-gateway:latest
+
+        # Variables de entorno (Spring Boot las mapea a propiedades)
+        env:
+        # URL de Eureka para que el gateway se registre y descubra servicios
+        - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          # Toma el valor desde el ConfigMap global
+          valueFrom:
+            # Referencia a una key de ConfigMap
+            configMapKeyRef:
+              # ConfigMap creado en 01-config.yaml
+              name: global-config
+              # Key que contiene la URL de Eureka
+              key: eureka-url
+
+        # Puertos expuestos por el contenedor
+        ports:
+        # Puerto donde escucha el gateway dentro del contenedor
+        - containerPort: 8080
+
+---
+
+################################################################################
+# DOCUMENTO 2: Service (NodePort) para exponer el Gateway
+# NodePort abre un puerto en el nodo (minikube/node) para acceso desde fuera.
+################################################################################
+
+# Versión de API (Service está en core v1)
+apiVersion: v1
+
+# Tipo de recurso
+kind: Service
+
+# Metadatos del Service
+metadata:
+  # Nombre del Service
+  name: api-gateway-service
+
+# Especificación del Service
+spec:
+  # Selector: enruta tráfico hacia Pods con este label
+  selector:
+    # Debe coincidir con el label del Deployment
+    app: api-gateway
+
+  # Tipo de Service: NodePort expone hacia fuera del cluster
+  type: NodePort
+
+  # Puertos del Service
+  ports:
+    # Puerto “interno” del Service
+    - port: 8080
+      # Puerto del contenedor al que se envía el tráfico
+      targetPort: 8080
+      # Puerto fijo que se abre en el nodo (rango típico 30000-32767)
+      nodePort: 30000

@@ -1,0 +1,144 @@
+################################################################################
+# DOCUMENTO 1: ConfigMap con scripts de inicialización
+# Este ConfigMap contiene un archivo SQL que el contenedor de MySQL ejecuta
+# automáticamente al arrancar (gracias a /docker-entrypoint-initdb.d).
+################################################################################
+
+# Versión de la API (ConfigMap está en el “core” v1)
+apiVersion: v1
+
+# Tipo de recurso
+kind: ConfigMap
+
+# Metadatos del objeto
+metadata:
+  # Nombre del ConfigMap (se referenciará desde el Deployment/volumen)
+  name: mysql-init-scripts
+
+# Datos dentro del ConfigMap: claves y valores
+data:
+  # Nombre de la clave: se convertirá en un archivo dentro del volumen
+  init.sql: |
+    # SQL: crea las bases de datos si no existen
+    CREATE DATABASE IF NOT EXISTS inventory_db;
+    CREATE DATABASE IF NOT EXISTS loans_db;
+    CREATE DATABASE IF NOT EXISTS fees_db;
+    CREATE DATABASE IF NOT EXISTS customers_db;
+
+---
+
+################################################################################
+# DOCUMENTO 2: Deployment de MySQL
+# Crea un Pod (replicado por defecto 1 vez) con un contenedor mysql:8.0.
+# Importante: aquí NO hay PersistentVolumeClaim, así que los datos se pierden
+# si el Pod se recrea (útil para dev, no recomendado para prod).
+################################################################################
+
+# Versión de la API para Deployments
+apiVersion: apps/v1
+
+# Tipo de recurso
+kind: Deployment
+
+# Metadatos del Deployment
+metadata:
+  # Nombre del Deployment
+  name: mysql-server
+
+# Especificación del Deployment
+spec:
+  # Selector: indica qué Pods pertenecen a este Deployment
+  selector:
+    # matchLabels debe coincidir con template.metadata.labels
+    matchLabels:
+      # Etiqueta usada por Service/selector
+      app: mysql
+
+  # Template: define el Pod que se va a crear
+  template:
+    # Metadatos del Pod
+    metadata:
+      # Labels que identifican al Pod
+      labels:
+        # Etiqueta principal del Pod
+        app: mysql
+
+    # Especificación del Pod
+    spec:
+      # Lista de contenedores del Pod
+      containers:
+      # Contenedor MySQL
+      - name: mysql
+        # Imagen Docker
+        image: mysql:8.0
+
+        # Variables de entorno para el contenedor
+        env:
+        # Password de root (MySQL la requiere al primer arranque)
+        - name: MYSQL_ROOT_PASSWORD
+          # Toma el valor desde un Secret existente
+          valueFrom:
+            # Referencia a una key dentro de un Secret
+            secretKeyRef:
+              # Nombre del Secret (definido en 01-config.yaml)
+              name: db-credentials
+              # Key dentro del Secret
+              key: mysql-root-password
+
+        # Puertos expuestos por el contenedor
+        ports:
+        # Puerto MySQL dentro del contenedor
+        - containerPort: 3306
+
+        # Montajes de volúmenes dentro del contenedor
+        volumeMounts:
+        # Montaje del volumen con el SQL de inicialización
+        - name: mysql-init
+          # Ruta especial que MySQL ejecuta al iniciar
+          mountPath: /docker-entrypoint-initdb.d
+
+      # Volúmenes declarados a nivel de Pod
+      volumes:
+      # Volumen llamado mysql-init
+      - name: mysql-init
+        # El volumen viene de un ConfigMap
+        configMap:
+          # Nombre del ConfigMap que contiene init.sql
+          name: mysql-init-scripts
+
+---
+
+################################################################################
+# DOCUMENTO 3: Service (ClusterIP) para MySQL
+# Expone MySQL dentro del cluster con un DNS estable:
+#   mysql-service.<namespace>.svc.cluster.local
+# Permite que otros Pods se conecten a MySQL usando ese nombre.
+################################################################################
+
+# Versión de la API (Service está en el “core” v1)
+apiVersion: v1
+
+# Tipo de recurso
+kind: Service
+
+# Metadatos del Service
+metadata:
+  # Nombre del Service (DNS interno)
+  name: mysql-service
+
+# Especificación del Service
+spec:
+  # Selector: se asocia a Pods con esta etiqueta
+  selector:
+    # Debe coincidir con el label del Deployment (app: mysql)
+    app: mysql
+
+  # Puertos que expone el Service
+  ports:
+    # Puerto del Service (lo que otros Pods usan)
+    - port: 3306
+      # Puerto destino en el contenedor
+      targetPort: 3306
+
+  # Tipo de Service: ClusterIP significa “solo accesible dentro del cluster”
+  type: ClusterIP

@@ -1,0 +1,51 @@
+server:
+  port: 8080 # El puerto estándar para el Gateway
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # (Opcional) Crea rutas automáticas, pero mejor definirlas manuales
+
+      # AQUÍ SE DEFINEN LAS RUTAS
+      routes:
+        # Ruta para MS-FEES
+        - id: ms-fees-route
+          uri: lb://MS-FEES  # "lb" significa Load Balancer. Busca "MS-FEES" en Eureka
+          predicates:
+            - Path=/api/fees/** # Todo lo que empiece por esto va al MS-Fees
+
+        # Ruta para MS-INVENTORY (Ejemplo)
+        - id: ms-inventory-route
+          uri: lb://MS-INVENTORY
+          predicates:
+            - Path=/api/tools/**
+
+        # Ruta para MS-LOANS (Ejemplo)
+        - id: ms-loans-route
+          uri: lb://MS-LOANS
+          predicates:
+            - Path=/api/loans/**
+
+      # CONFIGURACIÓN CORS (CRUCIAL PARA EL FRONTEND)
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*" # En producción cambia esto por la URL de tu frontend
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # URL local (se sobreescribe en Kubernetes)
+    register-with-eureka: true
+    fetch-registry: true

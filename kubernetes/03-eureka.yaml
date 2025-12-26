@@ -1,0 +1,96 @@
+################################################################################
+# DOCUMENTO 1: Deployment del Eureka Server
+# Crea el Pod (o Pods) que ejecutan ms-eureka-server dentro de Kubernetes.
+################################################################################
+
+# Versión de API para Deployments
+apiVersion: apps/v1
+
+# Tipo de recurso
+kind: Deployment
+
+# Metadatos del Deployment
+metadata:
+  # Nombre del Deployment
+  name: eureka-server
+
+# Especificación del Deployment
+spec:
+  # Cantidad de réplicas (Pods) que quieres correr
+  replicas: 1
+
+  # Selector: identifica qué Pods pertenecen a este Deployment
+  selector:
+    # Debe coincidir con template.metadata.labels
+    matchLabels:
+      # Label usado para “enganchar” Service y Deployment
+      app: eureka
+
+  # Template: define el “molde” del Pod que se va a crear
+  template:
+    # Metadatos del Pod
+    metadata:
+      # Labels del Pod
+      labels:
+        # Label principal para el Service
+        app: eureka
+
+    # Especificación del Pod
+    spec:
+      # Lista de contenedores del Pod
+      containers:
+      # Contenedor que corre el Eureka Server
+      - name: eureka
+
+        # IMAGEN DE DOCKER HUB
+        # Formato típico: <usuario_o_org>/<imagen>:<tag>
+        image: tu_usuario/eureka-server:latest
+
+        # Puertos expuestos por el contenedor
+        ports:
+        # Puerto donde corre Eureka (web UI + endpoint /eureka)
+        - containerPort: 8761
+
+        # Recursos (opcional): límites y requests para no saturar el cluster
+        resources:
+          # Límites máximos que puede usar el contenedor
+          limits:
+            # Memoria máxima permitida
+            memory: "512Mi"
+
+---
+
+################################################################################
+# DOCUMENTO 2: Service (ClusterIP) para Eureka
+# Da un DNS estable dentro del cluster (eureka-service) para que los demás Pods
+# encuentren Eureka sin depender del IP del Pod.
+################################################################################
+
+# Versión de la API (Service está en el “core” v1)
+apiVersion: v1
+
+# Tipo de recurso
+kind: Service
+
+# Metadatos del Service
+metadata:
+  # Nombre del Service (DNS interno)
+  # Este nombre se usa en el ConfigMap del Paso 1 (global-config -> eureka-url)
+  name: eureka-service
+
+# Especificación del Service
+spec:
+  # Selector: el Service enruta tráfico a Pods con este label
+  selector:
+    # Debe coincidir con el label del Deployment: app: eureka
+    app: eureka
+
+  # Puertos del Service
+  ports:
+    # Puerto del Service dentro del cluster
+    - port: 8761
+      # Puerto del contenedor/pod al que apunta
+      targetPort: 8761
+
+  # ClusterIP => accesible solo dentro del cluster
+  type: ClusterIP

@@ -1,0 +1,37 @@
+# 1) SECRETOS (Contraseñas)
+# Este objeto guarda credenciales para usarlas desde Pods (por ejemplo como variables de entorno).
+# Kubernetes recomienda usar Secret para contraseñas en vez de ponerlas “hardcodeadas” en Deployments.
+# Versión de API del recurso (Secret vive en la API core "v1")
+apiVersion: v1
+# Tipo de recurso: Secret 
+kind: Secret 
+
+# Metadatos del objeto
+metadata: 
+  name: db-credentials # Nombre del Secret dentro del namespace (referencia desde Deployments)
+
+type: Opaque # Tipo genérico de Secret (clave/valor arbitrario)
+
+# Claves y valores en texto plano; Kubernetes los convierte a base64 internamente
+stringData: 
+  mysql-root-password: "password123" # Password de root de MySQL
+  mysql-user-password: "password123" # Password del usuario normal de MySQL
+
+
+# Separador YAML: indica “otro documento” dentro del mismo archivo
+--- 
+
+# 2) CONFIGURACIÓN GLOBAL (ConfigMap)
+# Un ConfigMap guarda configuración NO sensible (URLs, flags, puertos, etc.).
+# A diferencia de Secret, aquí no se deberian guardar contraseñas.
+
+apiVersion: v1 # Versión de API del recurso (ConfigMap también vive en la API core "v1")
+kind: ConfigMap # Tipo de recurso
+
+metadata: # Metadatos del objeto
+  name: global-config # Nombre del ConfigMap (se referencia desde Deployments)
+
+data: # Pares clave/valor que se inyectan en Pods como env o archivos
+  # Eureka siempre estará disponible en este host dentro del cluster
+  # "eureka-service" normalmente es el nombre de un Service de Kubernetes apuntando al Eureka Server.
+  eureka-url: "http://eureka-service:8761/eureka/" # URL base del servidor Eureka para que los ms se registren

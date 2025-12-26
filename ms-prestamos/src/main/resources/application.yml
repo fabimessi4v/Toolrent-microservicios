@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: ms-prestamos
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/toolrent_bd
+    username: root
+    password: 18102002
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # audiences: account  # Comentado por no ser una propiedad estándar en Spring Boot; usar issuer-uri o jwk-set-uri si aplica
+
+services:
+  inventory:
+    url: http://localhost:8081/api/tools/
+
+server:
+  port: 8082
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}

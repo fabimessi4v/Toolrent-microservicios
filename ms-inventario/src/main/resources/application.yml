@@ -1,0 +1,15 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: MS-INVENTORY
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/toolrent_db
+    username: root
+    password: password
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
