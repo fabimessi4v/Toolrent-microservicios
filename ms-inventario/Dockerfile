@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1
-FROM gradle:8.0.2-jdk17 AS build
+FROM gradle:8.14-jdk17 AS build
 WORKDIR /app
 COPY . .
-RUN gradle build --no-daemon
+RUN gradle clean build -x test --no-daemon
 
 FROM eclipse-temurin:17-jre
 WORKDIR /app

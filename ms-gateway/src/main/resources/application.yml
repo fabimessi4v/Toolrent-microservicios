@@ -1,5 +1,5 @@
 server:
-  port: 8080 # El puerto est·ndar para el Gateway
+  port: 8080 # El puerto est√°ndar para el Gateway
 
 spring:
   application:
@@ -8,9 +8,9 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true # (Opcional) Crea rutas autom·ticas, pero mejor definirlas manuales
+          enabled: true # (Opcional) Crea rutas autom√°ticas, pero mejor definirlas manuales
 
-      # AQUÕ SE DEFINEN LAS RUTAS
+      # AQU√ç SE DEFINEN LAS RUTAS
       routes:
         # Ruta para MS-FEES
         - id: ms-fees-route
@@ -30,11 +30,11 @@ spring:
           predicates:
             - Path=/api/loans/**
 
-      # CONFIGURACI”N CORS (CRUCIAL PARA EL FRONTEND)
+      # CONFIGURACI√ìN CORS (CRUCIAL PARA EL FRONTEND)
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "*" # En producciÛn cambia esto por la URL de tu frontend
+            allowedOrigins: "*" # En producci√≥n cambia esto por la URL de tu frontend
             allowedMethods:
               - GET
               - POST
