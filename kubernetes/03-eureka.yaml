@@ -10,7 +10,7 @@ apiVersion: apps/v1
 kind: Deployment
 
 # Metadatos del Deployment
-metadata:
+metadata: 
   # Nombre del Deployment
   name: eureka-server
 
@@ -21,12 +21,12 @@ spec:
 
   # Selector: identifica qué Pods pertenecen a este Deployment
   selector:
-    # Debe coincidir con template.metadata.labels
+    # Debe coincidir con template. metadata.labels
     matchLabels:
-      # Label usado para “enganchar” Service y Deployment
+      # Label usado para "enganchar" Service y Deployment
       app: eureka
 
-  # Template: define el “molde” del Pod que se va a crear
+  # Template: define el "molde" del Pod que se va a crear
   template:
     # Metadatos del Pod
     metadata:
@@ -43,13 +43,66 @@ spec:
       - name: eureka
 
         # IMAGEN DE DOCKER HUB
-        # Formato típico: <usuario_o_org>/<imagen>:<tag>
-        image: tu_usuario/eureka-server:latest
+        image:  fabimessidev/eureka-server:latest
 
         # Puertos expuestos por el contenedor
         ports:
         # Puerto donde corre Eureka (web UI + endpoint /eureka)
         - containerPort: 8761
+
+        # ✅ VARIABLES DE ENTORNO (AÑADIDO)
+        # Configuran Eureka Server en modo standalone
+        env:
+            # ✅ AÑADIDO: Configurar URL del Config Server
+        - name: SPRING_CLOUD_CONFIG_URI
+          value: "http://config-server:8888"
+        
+        # ✅ AÑADIDO: Hacer que Config Server sea opcional (no bloqueante)
+        - name: SPRING_CLOUD_CONFIG_FAIL_FAST
+          value: "false"
+        
+        # ✅ AÑADIDO:  Forzar puerto 8761
+        - name: SERVER_PORT
+          value: "8761"
+        
+        # ✅ AÑADIDO: Nombre de la aplicación
+        - name:  SPRING_APPLICATION_NAME
+          value: "ms-eureka-server"
+        
+        # Deshabilitar cliente de Eureka (modo standalone)
+        - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+          value: "false"
+        
+        - name: EUREKA_CLIENT_FETCH_REGISTRY
+          value: "false"
+        
+        # Hostname del servidor Eureka
+        - name: EUREKA_INSTANCE_HOSTNAME
+          value: "eureka-service"
+        
+        # Deshabilitar self-preservation
+        - name: EUREKA_SERVER_ENABLE_SELF_PRESERVATION
+          value:  "false"
+        # ✅ HEALTH CHECKS (AÑADIDO)
+        # Verifica que el contenedor esté vivo
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8761
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        
+        # Verifica que el contenedor esté listo para recibir tráfico
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8761
+          initialDelaySeconds: 30
+          periodSeconds:  5
+          timeoutSeconds:  3
+          failureThreshold: 3
 
         # Recursos (opcional): límites y requests para no saturar el cluster
         resources:
@@ -57,6 +110,12 @@ spec:
           limits:
             # Memoria máxima permitida
             memory: "512Mi"
+            # CPU máximo (opcional)
+            cpu: "500m"
+          # Recursos mínimos garantizados
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
 
 ---
 
@@ -66,7 +125,7 @@ spec:
 # encuentren Eureka sin depender del IP del Pod.
 ################################################################################
 
-# Versión de la API (Service está en el “core” v1)
+# Versión de la API (Service está en el "core" v1)
 apiVersion: v1
 
 # Tipo de recurso
@@ -91,6 +150,8 @@ spec:
     - port: 8761
       # Puerto del contenedor/pod al que apunta
       targetPort: 8761
+      # Protocolo (opcional, por defecto es TCP)
+      protocol: TCP
 
   # ClusterIP => accesible solo dentro del cluster
   type: ClusterIP

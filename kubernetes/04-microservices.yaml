@@ -44,7 +44,7 @@ spec:
       - name: ms-inventory
 
         # Imagen Docker del microservicio (REEMPLAZA con tu repo real)
-        image: tu_usuario/ms-inventory:latest
+        image: fabimessidev/ms-inventario:latest
 
         # Variables de entorno que Spring Boot interpreta como propiedades
         env:
@@ -155,7 +155,7 @@ spec:
       - name: ms-loans
 
         # Imagen Docker del microservicio (REEMPLAZA con tu repo real)
-        image: tu_usuario/ms-loans:latest
+        image: fabimessidev/ms-prestamos:latest
 
         # Variables de entorno
         env:

@@ -42,8 +42,8 @@ spec:
       # Contenedor del gateway
       - name: api-gateway
 
-        # Imagen Docker del gateway (REEMPLAZA con tu repo real)
-        image: tu_usuario/api-gateway:latest
+        # Imagen Docker del gateway
+        image: fabimessidev/api-gateway:latest
 
         # Variables de entorno (Spring Boot las mapea a propiedades)
         env:
