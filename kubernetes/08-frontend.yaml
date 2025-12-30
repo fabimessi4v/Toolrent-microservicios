@@ -1,0 +1,57 @@
+################################################################################
+# Frontend (React/Angular/Vue)
+################################################################################
+
+apiVersion: apps/v1
+kind:  Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: frontend
+  template: 
+    metadata:
+      labels: 
+        app: frontend
+    spec: 
+      containers:
+      - name: frontend
+        image: fabimessidev/ms-frontend:latest  # Tu imagen
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80  # O 3000 si es desarrollo
+        env:
+        # URL del API Gateway
+        - name: REACT_APP_API_URL
+          value: "http://api-gateway:8080"
+        # URL de Keycloak
+        - name: REACT_APP_KEYCLOAK_URL
+          value: "http://keycloak:8080"
+        - name: REACT_APP_KEYCLOAK_REALM
+          value: "toolrent"
+        - name:  REACT_APP_KEYCLOAK_CLIENT_ID
+          value:  "toolrent-app"
+        
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "250m"
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+  - port:  80
+    targetPort: 80
+  type: NodePort  # Para acceder desde fuera del cluster

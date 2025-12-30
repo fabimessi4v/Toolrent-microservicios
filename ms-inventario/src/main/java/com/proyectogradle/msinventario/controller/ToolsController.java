@@ -2,10 +2,12 @@ package com.proyectogradle.msinventario.controller;
 
 import com.proyectogradle.msinventario.entity.Tools;
 import com.proyectogradle.msinventario.service.InventoryService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController // Indica que esta clase maneja peticiones HTTP
@@ -85,7 +87,19 @@ public class ToolsController {
         }
     }
 
-
+    // 3. Endpoint para OBTENER TODAS (GET ALL)
+    @GetMapping
+    public ResponseEntity<List<Tools>> getAllTools() {
+        try {
+            List<Tools> tools = inventoryService.getAllTools();
+            if (tools.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(tools, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((HttpHeaders) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 

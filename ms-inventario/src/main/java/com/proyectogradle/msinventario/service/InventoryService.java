@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -83,5 +84,11 @@ public class InventoryService {
         kardex.setMovementDate(LocalDate.now());
         kardex.setComments(comments);
         kardexRepository.save(kardex);
+    }
+
+    // --- GET ALL TOOLS ---
+    public List<Tools> getAllTools() {
+        log.info("MS-Inventory: Obteniendo lista completa de herramientas");
+        return toolsRepository.findAll();
     }
 }
