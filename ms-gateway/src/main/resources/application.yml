@@ -20,7 +20,7 @@ spring:
 
         # Ruta para MS-INVENTORY (Ejemplo)
         - id: ms-inventory-route
-          uri: lb://MS-INVENTORY
+          uri: lb://MS-INVENTORY #reenvia a MS-INVENTORY, registrado en eureka
           predicates:
             - Path=/api/tools/**
 
@@ -46,6 +46,6 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/ # URL local (se sobreescribe en Kubernetes)
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
     register-with-eureka: true
     fetch-registry: true

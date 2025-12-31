@@ -35,7 +35,7 @@ public class Tools {
     private String toolImageUrl;
 
     @CreationTimestamp
-    @Column(name = "createdAt", updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     // NOTA: Aquí NO ponemos @OneToMany(mappedBy="tool") hacia Kardex

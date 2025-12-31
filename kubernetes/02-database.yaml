@@ -19,11 +19,8 @@ metadata:
 data:
   # Nombre de la clave: se convertirá en un archivo dentro del volumen
   init.sql: |
-    # SQL: crea las bases de datos si no existen
-    CREATE DATABASE IF NOT EXISTS inventory_db;
-    CREATE DATABASE IF NOT EXISTS loans_db;
-    CREATE DATABASE IF NOT EXISTS fees_db;
-    CREATE DATABASE IF NOT EXISTS customers_db;
+    # SQL: crea la bases de datos si no existe
+     CREATE DATABASE IF NOT EXISTS toolrentdb;
 
 ---
 

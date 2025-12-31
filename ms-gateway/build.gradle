@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.3.5'
+	id 'org.springframework.boot' version '3.2.5'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -16,7 +16,7 @@ java {
 
 ext {
 	//  esta es una versión estable conocida.
-	springCloudVersion = '2023.0.6'
+	springCloudVersion = '2023.0.1'
 }
 
 dependencyManagement {

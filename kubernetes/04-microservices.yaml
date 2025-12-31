@@ -50,7 +50,7 @@ spec:
         env:
         # URL JDBC hacia MySQL dentro del cluster (usa el Service mysql-service)
         - name: SPRING_DATASOURCE_URL
-          value: jdbc:mysql://mysql-service:3306/inventory_db
+          value: jdbc:mysql://mysql-service:3306/toolrentdb
 
         # Password de la DB (se lee desde un Secret)
         - name: SPRING_DATASOURCE_PASSWORD
