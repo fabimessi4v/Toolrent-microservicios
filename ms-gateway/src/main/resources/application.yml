@@ -20,7 +20,7 @@ spring:
 
         # Ruta para MS-INVENTORY (Ejemplo)
         - id: ms-inventory-route
-          uri: lb://MS-INVENTORY #reenvia a MS-INVENTORY, registrado en eureka
+          uri: lb://ms-inventory #reenvia a MS-INVENTORY, registrado en eureka
           predicates:
             - Path=/api/tools/**
 

@@ -1,176 +1,87 @@
 ################################################################################
 # MS INVENTORY
-# Este bloque despliega el microservicio de inventario y crea un Service interno
-# para que otros Pods lo encuentren por DNS.
 ################################################################################
 
-# Versión API para Deployments
 apiVersion: apps/v1
-
-# Tipo de recurso
 kind: Deployment
-
-# Metadatos del Deployment
 metadata:
-  # Nombre del Deployment
   name: ms-inventory
-
-# Especificación del Deployment
 spec:
-  # Número de Pods que quieres para este microservicio
   replicas: 1
-
-  # Selector: identifica los Pods de este Deployment
   selector:
-    # Debe coincidir con template.metadata.labels
     matchLabels:
-      # Label principal
       app: ms-inventory
-
-  # Template: define el Pod a crear
   template:
-    # Metadatos del Pod
     metadata:
-      # Labels del Pod
       labels:
-        # Label que el Service usará para seleccionar este Pod
         app: ms-inventory
-
-    # Especificación del Pod
     spec:
-      # Lista de contenedores que van dentro del Pod
       containers:
-      # Contenedor del ms-inventory
       - name: ms-inventory
-
-        # Imagen Docker del microservicio (REEMPLAZA con tu repo real)
         image: fabimessidev/ms-inventario:latest
-
-        # Variables de entorno que Spring Boot interpreta como propiedades
+        ports:
+          - containerPort: 8080
         env:
-        # URL JDBC hacia MySQL dentro del cluster (usa el Service mysql-service)
         - name: SPRING_DATASOURCE_URL
           value: jdbc:mysql://mysql-service:3306/toolrentdb
-
-        # Password de la DB (se lee desde un Secret)
+        - name: SERVER_PORT
+          value: "8080"
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
-            # Referenciar key de un Secret
             secretKeyRef:
-              # Nombre del Secret creado en 01-config.yaml
               name: db-credentials
-              # Key que contiene la contraseña
               key: mysql-root-password
-
-        # URL de Eureka para que el microservicio se registre
         - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
           valueFrom:
-            # Referenciar key de un ConfigMap
             configMapKeyRef:
-              # ConfigMap creado en 01-config.yaml
               name: global-config
-              # Key con la URL (http://eureka-service:8761/eureka/)
               key: eureka-url
 
 ---
 
-################################################################################
-# Service interno para MS INVENTORY
-# ClusterIP => solo accesible dentro del cluster.
-# Los Pods lo pueden resolver como: http://ms-inventory:8080
-################################################################################
-
-# Versión API (Service en core v1)
 apiVersion: v1
-
-# Tipo de recurso
 kind: Service
-
-# Metadatos del Service
 metadata:
-  # Nombre DNS del servicio
   name: ms-inventory
-
-# Especificación del Service
 spec:
-  # Selector: enruta hacia Pods con este label
   selector:
-    # Debe coincidir con app: ms-inventory (Deployment)
     app: ms-inventory
-
-  # Puertos expuestos por el Service
   ports:
-  # Puerto del Service dentro del cluster
-  - port: 8080
-    # Puerto del contenedor (donde escucha Spring Boot)
-    targetPort: 8080
-
-  # Tipo de Service
+    - port: 8080
+      targetPort: 8080
   type: ClusterIP
 
 ---
 
 ################################################################################
 # MS LOANS
-# Despliega el microservicio de préstamos y lo expone internamente con un Service.
 ################################################################################
 
-# Versión API para Deployments
 apiVersion: apps/v1
-
-# Tipo de recurso
 kind: Deployment
-
-# Metadatos del Deployment
 metadata:
-  # Nombre del Deployment
   name: ms-loans
-
-# Especificación del Deployment
 spec:
-  # Número de Pods
   replicas: 1
-
-  # Selector de Pods
   selector:
-    # Debe coincidir con template.metadata.labels
     matchLabels:
-      # Label principal
       app: ms-loans
-
-  # Template del Pod
   template:
-    # Metadatos del Pod
     metadata:
-      # Labels del Pod
       labels:
-        # Label para el Service
         app: ms-loans
-
-    # Especificación del Pod
     spec:
-      # Contenedores del Pod
       containers:
-      # Contenedor del ms-loans
       - name: ms-loans
-
-        # Imagen Docker del microservicio (REEMPLAZA con tu repo real)
         image: fabimessidev/ms-prestamos:latest
-
-        # Variables de entorno
         env:
-        # URL JDBC a MySQL (usa el Service mysql-service)
         - name: SPRING_DATASOURCE_URL
           value: jdbc:mysql://mysql-service:3306/loans_db
-
-        # Password de DB desde Secret
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
             secretKeyRef:
               name: db-credentials
               key: mysql-root-password
-
-        # URL de Eureka desde ConfigMap
         - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
           valueFrom:
             configMapKeyRef:
@@ -179,33 +90,14 @@ spec:
 
 ---
 
-################################################################################
-# Service interno para MS LOANS
-# ClusterIP => accesible solo dentro del cluster.
-# Los Pods lo pueden resolver como: http://ms-loans:8080
-################################################################################
-
-# Versión API (Service)
 apiVersion: v1
-
-# Tipo de recurso
 kind: Service
-
-# Metadatos del Service
 metadata:
-  # Nombre DNS del Service
   name: ms-loans
-
-# Especificación
 spec:
-  # Selector: apunta a Pods con app: ms-loans
   selector:
     app: ms-loans
-
-  # Puertos del Service
   ports:
-  - port: 8080
-    targetPort: 8080
-
-  # Tipo
+    - port: 8080
+      targetPort: 8080
   type: ClusterIP

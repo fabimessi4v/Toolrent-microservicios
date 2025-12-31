@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: MS-INVENTORY
+    name: ms-inventory
   datasource:
     url: jdbc:mysql://${DB_HOST:localhost}:3306/toolrentdb
     username: root
