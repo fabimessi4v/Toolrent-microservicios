@@ -3,7 +3,7 @@ import Keycloak from 'keycloak-js';
 
 // Configuración de Keycloak apuntando al NodePort
 const keycloakConfig = {
-  url: 'http://192.168.39.54:30081',  // NodePort de Keycloak
+  url: 'http://192.168.39.36:30081',  // NodePort de Keycloak
   realm: 'toolrent',
   clientId: 'toolrent-frontend',
 };

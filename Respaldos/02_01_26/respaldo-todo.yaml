@@ -1,0 +1,4623 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/restartedAt: "2025-12-31T18:27:12-03:00"
+    creationTimestamp: "2025-12-31T21:27:12Z"
+    generateName: api-gateway-6455cf4cbc-
+    generation: 1
+    labels:
+      app: api-gateway
+      pod-template-hash: 6455cf4cbc
+    name: api-gateway-6455cf4cbc-488wr
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: api-gateway-6455cf4cbc
+      uid: d1190ec5-a353-4d82-bc2c-22473eb48370
+    resourceVersion: "52205"
+    uid: cce2823f-36e0-4b45-a934-27001b823aad
+  spec:
+    containers:
+    - env:
+      - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        valueFrom:
+          configMapKeyRef:
+            key: eureka-url
+            name: global-config
+      image: fabimessidev/api-gateway-service:20251231-182542
+      imagePullPolicy: Always
+      name: api-gateway
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kqrwh
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: minikube
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-kqrwh
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      observedGeneration: 1
+      status: "False"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-31T21:27:12Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [api-gateway]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [api-gateway]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-31T21:27:12Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://5367cc2c9db826c3dceff4804c2a8e4e466bd6805e672f69b51a1492198e4e43
+      image: fabimessidev/api-gateway-service:20251231-182542
+      imageID: docker-pullable://fabimessidev/api-gateway-service@sha256:3a06495876ecc656940b403baab24a489abe07fe5fc1c0084bd48fbf0a6b8c4e
+      lastState: {}
+      name: api-gateway
+      ready: false
+      resources: {}
+      restartCount: 1
+      started: false
+      state:
+        terminated:
+          containerID: docker://5367cc2c9db826c3dceff4804c2a8e4e466bd6805e672f69b51a1492198e4e43
+          exitCode: 143
+          finishedAt: "2026-01-02T15:34:57Z"
+          reason: Error
+          startedAt: "2026-01-02T15:20:12Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kqrwh
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.39.54
+    hostIPs:
+    - ip: 192.168.39.54
+    observedGeneration: 1
+    phase: Running
+    qosClass: BestEffort
+    startTime: "2025-12-31T21:27:12Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-12-29T17:26:25Z"
+    generateName: config-server-6c958467dd-
+    generation: 1
+    labels:
+      app: config-server
+      pod-template-hash: 6c958467dd
+    name: config-server-6c958467dd-k2mds
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: config-server-6c958467dd
+      uid: 2b561b8d-df96-46ab-a037-57260d0b1a1a
+    resourceVersion: "52206"
+    uid: c665d3ef-03f4-4b03-a64b-41df1c86dbc8
+  spec:
+    containers:
+    - env:
+      - name: EUREKA_URL
+        value: http://eureka-service:8761/eureka/
+      - name: CONFIG_GIT_URI
+        value: https://github.com/Fabimessi4v/Toolrent-microservicios
+      - name: SERVER_PORT
+        value: "8888"
+      - name: SPRING_APPLICATION_NAME
+        value: ms-config-server
+      - name: EUREKA_CLIENT_ENABLED
+        value: "false"
+      image: fabimessidev/config-server:latest
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /actuator/health
+          port: 8888
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: config-server
+      ports:
+      - containerPort: 8888
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /actuator/health
+          port: 8888
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 5
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-qlncx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: minikube
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-qlncx
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      observedGeneration: 1
+      status: "False"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-29T17:26:25Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [config-server]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [config-server]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-29T17:26:25Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://75908f83236b302b353128f8092358e1c162673385f1069b2ccf52b475a699b3
+      image: fabimessidev/config-server:latest
+      imageID: docker-pullable://fabimessidev/config-server@sha256:2c55fec2bd7d45d7979840a5842b46ddd812ffefd92f928383c3e930182ab3b6
+      lastState: {}
+      name: config-server
+      ready: false
+      resources: {}
+      restartCount: 7
+      started: false
+      state:
+        terminated:
+          containerID: docker://75908f83236b302b353128f8092358e1c162673385f1069b2ccf52b475a699b3
+          exitCode: 143
+          finishedAt: "2026-01-02T15:34:52Z"
+          reason: Error
+          startedAt: "2026-01-02T15:20:13Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-qlncx
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.39.54
+    hostIPs:
+    - ip: 192.168.39.54
+    observedGeneration: 1
+    phase: Running
+    qosClass: BestEffort
+    startTime: "2025-12-29T17:26:25Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-12-29T17:26:11Z"
+    generateName: eureka-server-7d7659b587-
+    generation: 1
+    labels:
+      app: eureka
+      pod-template-hash: 7d7659b587
+    name: eureka-server-7d7659b587-w7b4j
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: eureka-server-7d7659b587
+      uid: 60a08ab2-0753-4577-8563-767e6c56c35d
+    resourceVersion: "52200"
+    uid: 3fccff05-4000-4be6-97d7-bf238e9fcc70
+  spec:
+    containers:
+    - env:
+      - name: SPRING_CLOUD_CONFIG_URI
+        value: http://config-server:8888
+      - name: SPRING_CLOUD_CONFIG_FAIL_FAST
+        value: "false"
+      - name: SERVER_PORT
+        value: "8761"
+      - name: SPRING_APPLICATION_NAME
+        value: ms-eureka-server
+      - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+        value: "false"
+      - name: EUREKA_CLIENT_FETCH_REGISTRY
+        value: "false"
+      - name: EUREKA_INSTANCE_HOSTNAME
+        value: eureka-service
+      - name: EUREKA_SERVER_ENABLE_SELF_PRESERVATION
+        value: "false"
+      image: fabimessidev/eureka-server:latest
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /actuator/health
+          port: 8761
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: eureka
+      ports:
+      - containerPort: 8761
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /actuator/health
+          port: 8761
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 5
+        successThreshold: 1
+        timeoutSeconds: 3
+      resources:
+        limits:
+          cpu: 500m
+          memory: 512Mi
+        requests:
+          cpu: 250m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-lrzjq
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: minikube
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-lrzjq
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      observedGeneration: 1
+      status: "False"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-29T17:26:11Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [eureka]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [eureka]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-29T17:26:11Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - allocatedResources:
+        cpu: 250m
+        memory: 256Mi
+      containerID: docker://a8be36a819c3b10352dc869472f0d571304f95823168026ee09005747fe430f9
+      image: fabimessidev/eureka-server:latest
+      imageID: docker-pullable://fabimessidev/eureka-server@sha256:2bd786f66b426e5243c6b3948a7ae90bb5e9005941360d57bcbcb21e20a8ec7f
+      lastState: {}
+      name: eureka
+      ready: false
+      resources:
+        limits:
+          cpu: 500m
+          memory: 512Mi
+        requests:
+          cpu: 250m
+          memory: 256Mi
+      restartCount: 5
+      started: false
+      state:
+        terminated:
+          containerID: docker://a8be36a819c3b10352dc869472f0d571304f95823168026ee09005747fe430f9
+          exitCode: 143
+          finishedAt: "2026-01-02T15:34:52Z"
+          reason: Error
+          startedAt: "2026-01-02T15:20:15Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-lrzjq
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.39.54
+    hostIPs:
+    - ip: 192.168.39.54
+    observedGeneration: 1
+    phase: Running
+    qosClass: Burstable
+    startTime: "2025-12-29T17:26:11Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/restartedAt: "2025-12-29T20:31:23-03:00"
+    creationTimestamp: "2025-12-29T23:31:23Z"
+    generateName: frontend-5959f5886f-
+    generation: 1
+    labels:
+      app: frontend
+      pod-template-hash: 5959f5886f
+    name: frontend-5959f5886f-5wmbw
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: frontend-5959f5886f
+      uid: 502fc9ef-6246-4c89-aa09-ebaf4019796a
+    resourceVersion: "52405"
+    uid: 49012b01-8184-4773-868c-0d228e30223f
+  spec:
+    containers:
+    - env:
+      - name: REACT_APP_API_URL
+        value: http://api-gateway:8080
+      - name: REACT_APP_KEYCLOAK_URL
+        value: http://keycloak:8080
+      - name: REACT_APP_KEYCLOAK_REALM
+        value: toolrent
+      - name: REACT_APP_KEYCLOAK_CLIENT_ID
+        value: toolrent-app
+      image: fabimessidev/ms-frontend:20251229-203048
+      imagePullPolicy: Always
+      name: frontend
+      ports:
+      - containerPort: 80
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 250m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-2hjk6
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-2hjk6
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-29T23:31:23Z"
+      message: '0/1 nodes are available: 1 Insufficient cpu. no new claims to deallocate,
+        preemption: 0/1 nodes are available: 1 No preemption victims found for incoming
+        pod.'
+      observedGeneration: 1
+      reason: Unschedulable
+      status: "False"
+      type: PodScheduled
+    phase: Pending
+    qosClass: Burstable
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/restartedAt: "2025-12-29T14:38:33-03:00"
+    creationTimestamp: "2025-12-29T17:38:33Z"
+    generateName: frontend-86d84bfc98-
+    generation: 1
+    labels:
+      app: frontend
+      pod-template-hash: 86d84bfc98
+    name: frontend-86d84bfc98-nkff9
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: frontend-86d84bfc98
+      uid: 8574712a-8c28-47de-8f30-a837b27bab87
+    resourceVersion: "52201"
+    uid: acaabd3b-d247-4094-b51b-ee26aa3bb6aa
+  spec:
+    containers:
+    - env:
+      - name: REACT_APP_API_URL
+        value: http://api-gateway:8080
+      - name: REACT_APP_KEYCLOAK_URL
+        value: http://keycloak:8080
+      - name: REACT_APP_KEYCLOAK_REALM
+        value: toolrent
+      - name: REACT_APP_KEYCLOAK_CLIENT_ID
+        value: toolrent-app
+      image: fabimessidev/ms-frontend:20251229-143759
+      imagePullPolicy: Always
+      name: frontend
+      ports:
+      - containerPort: 80
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 250m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-tcntz
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: minikube
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-tcntz
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      observedGeneration: 1
+      status: "False"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-29T17:38:33Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [frontend]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [frontend]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-29T17:38:33Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - allocatedResources:
+        cpu: 100m
+        memory: 128Mi
+      containerID: docker://79ccc354718092a826313d4d70513925ea94e0d2ea70e20179c897a876697380
+      image: fabimessidev/ms-frontend:20251229-143759
+      imageID: docker-pullable://fabimessidev/ms-frontend@sha256:ab1907d6467e95a4d9b54ee6d1768940ddbc045f0a07e81543f79fab30e98a1c
+      lastState: {}
+      name: frontend
+      ready: false
+      resources:
+        limits:
+          cpu: 250m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      restartCount: 5
+      started: false
+      state:
+        terminated:
+          containerID: docker://79ccc354718092a826313d4d70513925ea94e0d2ea70e20179c897a876697380
+          exitCode: 0
+          finishedAt: "2026-01-02T15:34:52Z"
+          reason: Completed
+          startedAt: "2026-01-02T15:20:14Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-tcntz
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.39.54
+    hostIPs:
+    - ip: 192.168.39.54
+    observedGeneration: 1
+    phase: Running
+    qosClass: Burstable
+    startTime: "2025-12-29T17:38:33Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-12-29T17:35:35Z"
+    generateName: keycloak-85bc4bfff9-
+    generation: 1
+    labels:
+      app: keycloak
+      pod-template-hash: 85bc4bfff9
+    name: keycloak-85bc4bfff9-6c4hm
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: keycloak-85bc4bfff9
+      uid: 9052f5e0-46a9-48ce-ad52-aebba7cbce91
+    resourceVersion: "52199"
+    uid: 24c33b69-1125-4537-a66f-5cee9d926148
+  spec:
+    containers:
+    - args:
+      - start-dev
+      env:
+      - name: KEYCLOAK_ADMIN
+        value: admin
+      - name: KEYCLOAK_ADMIN_PASSWORD
+        value: admin123
+      - name: KC_DB
+        value: mysql
+      - name: KC_DB_URL
+        value: jdbc:mysql://mysql-service:3306/keycloak_db? characterEncoding=UTF-8
+      - name: KC_DB_USERNAME
+        value: root
+      - name: KC_DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: mysql-root-password
+            name: db-credentials
+      - name: KC_HOSTNAME_STRICT
+        value: "false"
+      - name: KC_HOSTNAME_STRICT_HTTPS
+        value: "false"
+      - name: KC_HTTP_ENABLED
+        value: "true"
+      - name: KC_LOG_LEVEL
+        value: INFO
+      image: quay.io/keycloak/keycloak:23.0
+      imagePullPolicy: IfNotPresent
+      name: keycloak
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources:
+        limits:
+          cpu: "1"
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 512Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-prvqq
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    initContainers:
+    - command:
+      - sh
+      - -c
+      - |
+        mysql -h mysql-service -u root -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS keycloak_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+        echo "Base de datos keycloak_db creada o ya existe"
+      env:
+      - name: MYSQL_ROOT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: mysql-root-password
+            name: db-credentials
+      image: mysql:8.0
+      imagePullPolicy: IfNotPresent
+      name: create-keycloak-db
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-prvqq
+        readOnly: true
+    nodeName: minikube
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-prvqq
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      observedGeneration: 1
+      status: "False"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-29T17:35:36Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [keycloak]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [keycloak]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-29T17:35:35Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - allocatedResources:
+        cpu: 500m
+        memory: 512Mi
+      containerID: docker://f8e156d4a3f3a3e5fa9ef1317bf65e94f31e0e6cf5a17523e37edc18d124d82a
+      image: quay.io/keycloak/keycloak:23.0
+      imageID: docker-pullable://quay.io/keycloak/keycloak@sha256:14e99d6f5dd0516a5bdc82537b732cb85469ecdb15ad7fe5f11ff67521544db8
+      lastState: {}
+      name: keycloak
+      ready: false
+      resources:
+        limits:
+          cpu: "1"
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 512Mi
+      restartCount: 108
+      started: false
+      state:
+        terminated:
+          containerID: docker://f8e156d4a3f3a3e5fa9ef1317bf65e94f31e0e6cf5a17523e37edc18d124d82a
+          exitCode: 143
+          finishedAt: "2026-01-02T15:34:52Z"
+          reason: Error
+          startedAt: "2026-01-02T15:33:00Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-prvqq
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.39.54
+    hostIPs:
+    - ip: 192.168.39.54
+    initContainerStatuses:
+    - containerID: docker://3b9660c310e756aadec961a6162576e8a33a6721dcfd57b04510642d368cb1f9
+      image: mysql:8.0
+      imageID: docker-pullable://mysql@sha256:0790c3b4f5f20e4a275575cec26263216b0b3067a1c6a330fe03bd69dedbc3e1
+      lastState: {}
+      name: create-keycloak-db
+      ready: true
+      resources: {}
+      restartCount: 5
+      started: false
+      state:
+        terminated:
+          containerID: docker://3b9660c310e756aadec961a6162576e8a33a6721dcfd57b04510642d368cb1f9
+          exitCode: 0
+          finishedAt: "2026-01-02T15:20:09Z"
+          reason: Completed
+          startedAt: "2026-01-02T15:20:09Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-prvqq
+        readOnly: true
+        recursiveReadOnly: Disabled
+    observedGeneration: 1
+    phase: Running
+    qosClass: Burstable
+    startTime: "2025-12-29T17:35:35Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/restartedAt: "2026-01-02T12:31:25-03:00"
+    creationTimestamp: "2026-01-02T15:31:25Z"
+    generateName: keycloak-f95749d9f-
+    generation: 1
+    labels:
+      app: keycloak
+      pod-template-hash: f95749d9f
+    name: keycloak-f95749d9f-bqvmb
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: keycloak-f95749d9f
+      uid: 1ddaf178-9a9b-4e74-92a0-094a974ea2f1
+    resourceVersion: "52406"
+    uid: 248b337f-e1f4-4bcb-a0e5-12c778d64c11
+  spec:
+    containers:
+    - args:
+      - start-dev
+      env:
+      - name: KEYCLOAK_ADMIN
+        value: admin
+      - name: KEYCLOAK_ADMIN_PASSWORD
+        value: admin123
+      - name: KC_DB
+        value: mysql
+      - name: KC_DB_URL
+        value: jdbc:mysql://mysql-service:3306/keycloak_db? characterEncoding=UTF-8
+      - name: KC_DB_USERNAME
+        value: root
+      - name: KC_DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: mysql-root-password
+            name: db-credentials
+      - name: KC_HOSTNAME_STRICT
+        value: "false"
+      - name: KC_HOSTNAME_STRICT_HTTPS
+        value: "false"
+      - name: KC_HTTP_ENABLED
+        value: "true"
+      - name: KC_LOG_LEVEL
+        value: INFO
+      image: quay.io/keycloak/keycloak:23.0
+      imagePullPolicy: IfNotPresent
+      name: keycloak
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources:
+        limits:
+          cpu: "1"
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 512Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-g2sc2
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    initContainers:
+    - command:
+      - sh
+      - -c
+      - |
+        mysql -h mysql-service -u root -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS keycloak_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+        echo "Base de datos keycloak_db creada o ya existe"
+      env:
+      - name: MYSQL_ROOT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: mysql-root-password
+            name: db-credentials
+      image: mysql:8.0
+      imagePullPolicy: IfNotPresent
+      name: create-keycloak-db
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-g2sc2
+        readOnly: true
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-g2sc2
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:31:25Z"
+      message: '0/1 nodes are available: 1 Insufficient cpu. no new claims to deallocate,
+        preemption: 0/1 nodes are available: 1 No preemption victims found for incoming
+        pod.'
+      observedGeneration: 1
+      reason: Unschedulable
+      status: "False"
+      type: PodScheduled
+    phase: Pending
+    qosClass: Burstable
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/restartedAt: "2025-12-31T18:25:15-03:00"
+    creationTimestamp: "2025-12-31T21:25:15Z"
+    generateName: ms-inventory-bd8d7ccf-
+    generation: 1
+    labels:
+      app: ms-inventory
+      pod-template-hash: bd8d7ccf
+    name: ms-inventory-bd8d7ccf-xwgt8
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: ms-inventory-bd8d7ccf
+      uid: ff462f72-7dd9-4595-b5b3-6b57c0cfc505
+    resourceVersion: "52196"
+    uid: 3aec17ad-ba3e-4fad-a1e9-985fdc4a7c75
+  spec:
+    containers:
+    - env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://mysql-service:3306/toolrentdb
+      - name: SERVER_PORT
+        value: "8080"
+      - name: SPRING_DATASOURCE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: mysql-root-password
+            name: db-credentials
+      - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        valueFrom:
+          configMapKeyRef:
+            key: eureka-url
+            name: global-config
+      image: fabimessidev/ms-inventory:20251231-182120
+      imagePullPolicy: Always
+      name: ms-inventory
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-z5s7j
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: minikube
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-z5s7j
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      observedGeneration: 1
+      status: "False"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-31T21:25:15Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [ms-inventory]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [ms-inventory]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-31T21:25:15Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://bad21a75bf67b9a98e6686c13b7906554ab283189ed2083f42a92cf6b80e5f7d
+      image: fabimessidev/ms-inventory:20251231-182120
+      imageID: docker-pullable://fabimessidev/ms-inventory@sha256:afdf64de869d2c18cb9f304c38c65f6bb06e4d8076e5bed618cc08976efb37be
+      lastState: {}
+      name: ms-inventory
+      ready: false
+      resources: {}
+      restartCount: 1
+      started: false
+      state:
+        terminated:
+          containerID: docker://bad21a75bf67b9a98e6686c13b7906554ab283189ed2083f42a92cf6b80e5f7d
+          exitCode: 143
+          finishedAt: "2026-01-02T15:34:52Z"
+          reason: Error
+          startedAt: "2026-01-02T15:20:10Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-z5s7j
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.39.54
+    hostIPs:
+    - ip: 192.168.39.54
+    observedGeneration: 1
+    phase: Running
+    qosClass: BestEffort
+    startTime: "2025-12-31T21:25:15Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-12-29T17:26:16Z"
+    generateName: ms-loans-786b9f5874-
+    generation: 1
+    labels:
+      app: ms-loans
+      pod-template-hash: 786b9f5874
+    name: ms-loans-786b9f5874-2zr8n
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: ms-loans-786b9f5874
+      uid: e80c7136-0d46-47e7-923d-2cd08ad956df
+    resourceVersion: "52198"
+    uid: 53f26aaa-4493-41ad-b6eb-1e3896e0bf5e
+  spec:
+    containers:
+    - env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://mysql-service:3306/loans_db
+      - name: SPRING_DATASOURCE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: mysql-root-password
+            name: db-credentials
+      - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        valueFrom:
+          configMapKeyRef:
+            key: eureka-url
+            name: global-config
+      image: fabimessidev/ms-prestamos:latest
+      imagePullPolicy: Always
+      name: ms-loans
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-tqm7p
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: minikube
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-tqm7p
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      observedGeneration: 1
+      status: "False"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-29T17:26:16Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:32:24Z"
+      message: 'containers with unready status: [ms-loans]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:32:24Z"
+      message: 'containers with unready status: [ms-loans]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-29T17:26:16Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://c49db443146f6b70e1b00fc5da64349669b218451d3873b89f978f140c92a5d2
+      image: fabimessidev/ms-prestamos:latest
+      imageID: docker-pullable://fabimessidev/ms-prestamos@sha256:5a7d4a0065a752d9b36729820fe29943fffb7a06460a14b9bb610e02dda7381b
+      lastState: {}
+      name: ms-loans
+      ready: false
+      resources: {}
+      restartCount: 74
+      started: false
+      state:
+        terminated:
+          containerID: docker://c49db443146f6b70e1b00fc5da64349669b218451d3873b89f978f140c92a5d2
+          exitCode: 1
+          finishedAt: "2026-01-02T15:32:23Z"
+          reason: Error
+          startedAt: "2026-01-02T15:32:18Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-tqm7p
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.39.54
+    hostIPs:
+    - ip: 192.168.39.54
+    observedGeneration: 1
+    phase: Running
+    qosClass: BestEffort
+    startTime: "2025-12-29T17:26:16Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-12-31T02:06:05Z"
+    generateName: mysql-server-9d4b89db9-
+    generation: 1
+    labels:
+      app: mysql
+      pod-template-hash: 9d4b89db9
+    name: mysql-server-9d4b89db9-qqd5c
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: mysql-server-9d4b89db9
+      uid: fe0cba32-ebdb-4e62-87bb-96ca39f1672b
+    resourceVersion: "52204"
+    uid: e1e42bec-6222-434e-8de6-348febec233c
+  spec:
+    containers:
+    - env:
+      - name: MYSQL_ROOT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: mysql-root-password
+            name: db-credentials
+      image: mysql:8.0
+      imagePullPolicy: IfNotPresent
+      name: mysql
+      ports:
+      - containerPort: 3306
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /docker-entrypoint-initdb.d
+        name: mysql-init
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-8p449
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: minikube
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: mysql-init-scripts
+      name: mysql-init
+    - name: kube-api-access-8p449
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      observedGeneration: 1
+      status: "False"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-31T02:06:05Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [mysql]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-01-02T15:40:33Z"
+      message: 'containers with unready status: [mysql]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-12-31T02:06:05Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://fc5d9105b2be3c865404dd22ee0b8267bba643b6e538d75a3914195c196f00a5
+      image: mysql:8.0
+      imageID: docker-pullable://mysql@sha256:0790c3b4f5f20e4a275575cec26263216b0b3067a1c6a330fe03bd69dedbc3e1
+      lastState: {}
+      name: mysql
+      ready: false
+      resources: {}
+      restartCount: 3
+      started: false
+      state:
+        terminated:
+          containerID: docker://fc5d9105b2be3c865404dd22ee0b8267bba643b6e538d75a3914195c196f00a5
+          exitCode: 0
+          finishedAt: "2026-01-02T15:34:55Z"
+          reason: Completed
+          startedAt: "2026-01-02T15:20:09Z"
+      volumeMounts:
+      - mountPath: /docker-entrypoint-initdb.d
+        name: mysql-init
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-8p449
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.39.54
+    hostIPs:
+    - ip: 192.168.39.54
+    observedGeneration: 1
+    phase: Running
+    qosClass: BestEffort
+    startTime: "2025-12-31T02:06:05Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"api-gateway-service","namespace":"default"},"spec":{"ports":[{"port":8080,"targetPort":8080}],"selector":{"app":"api-gateway"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-29T17:26:21Z"
+    name: api-gateway-service
+    namespace: default
+    resourceVersion: "18667"
+    uid: 31811b7e-10c0-43ff-b9b7-494b3d12369d
+  spec:
+    clusterIP: 10.101.91.27
+    clusterIPs:
+    - 10.101.91.27
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: api-gateway
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"config-server","namespace":"default"},"spec":{"ports":[{"port":8888,"targetPort":8888}],"selector":{"app":"config-server"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-29T17:26:25Z"
+    name: config-server
+    namespace: default
+    resourceVersion: "552"
+    uid: 17b9805e-05cc-497f-9861-5e51041e7403
+  spec:
+    clusterIP: 10.104.65.77
+    clusterIPs:
+    - 10.104.65.77
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 8888
+      protocol: TCP
+      targetPort: 8888
+    selector:
+      app: config-server
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"eureka-service","namespace":"default"},"spec":{"ports":[{"port":8761,"protocol":"TCP","targetPort":8761}],"selector":{"app":"eureka"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-29T17:26:11Z"
+    name: eureka-service
+    namespace: default
+    resourceVersion: "468"
+    uid: 7b4c32d3-7873-4571-a8de-aca3fe9c67aa
+  spec:
+    clusterIP: 10.103.187.202
+    clusterIPs:
+    - 10.103.187.202
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 8761
+      protocol: TCP
+      targetPort: 8761
+    selector:
+      app: eureka
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"frontend","namespace":"default"},"spec":{"ports":[{"port":80,"targetPort":80}],"selector":{"app":"frontend"},"type":"NodePort"}}
+    creationTimestamp: "2025-12-29T17:26:33Z"
+    name: frontend
+    namespace: default
+    resourceVersion: "599"
+    uid: 1b813831-c8af-405e-91a7-1c39cda1e3bb
+  spec:
+    clusterIP: 10.108.122.213
+    clusterIPs:
+    - 10.108.122.213
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - nodePort: 30115
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: frontend
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"keycloak","namespace":"default"},"spec":{"ports":[{"nodePort":30081,"port":8080,"targetPort":8080}],"selector":{"app":"keycloak"},"type":"NodePort"}}
+    creationTimestamp: "2025-12-29T17:26:30Z"
+    name: keycloak
+    namespace: default
+    resourceVersion: "579"
+    uid: c870e970-d1e5-4503-80fc-bc8f7bfa1e68
+  spec:
+    clusterIP: 10.111.200.196
+    clusterIPs:
+    - 10.111.200.196
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - nodePort: 30081
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: keycloak
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2025-12-29T17:24:57Z"
+    labels:
+      component: apiserver
+      provider: kubernetes
+    name: kubernetes
+    namespace: default
+    resourceVersion: "202"
+    uid: c60b94ad-8c55-4a70-99aa-130999c1adb2
+  spec:
+    clusterIP: 10.96.0.1
+    clusterIPs:
+    - 10.96.0.1
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"ms-inventory","namespace":"default"},"spec":{"ports":[{"port":8080,"targetPort":8080}],"selector":{"app":"ms-inventory"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-29T17:26:16Z"
+    name: ms-inventory
+    namespace: default
+    resourceVersion: "488"
+    uid: b7d0bb9e-ed38-4ff0-8006-db947d1bc11e
+  spec:
+    clusterIP: 10.101.91.235
+    clusterIPs:
+    - 10.101.91.235
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: ms-inventory
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"ms-loans","namespace":"default"},"spec":{"ports":[{"port":8080,"targetPort":8080}],"selector":{"app":"ms-loans"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-29T17:26:16Z"
+    name: ms-loans
+    namespace: default
+    resourceVersion: "505"
+    uid: 34ae8a0d-8f6e-49f4-bfbe-f38fb470cb85
+  spec:
+    clusterIP: 10.102.192.186
+    clusterIPs:
+    - 10.102.192.186
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: ms-loans
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"mysql-service","namespace":"default"},"spec":{"ports":[{"port":3306,"targetPort":3306}],"selector":{"app":"mysql"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-29T17:26:06Z"
+    name: mysql-service
+    namespace: default
+    resourceVersion: "444"
+    uid: 465f1e6e-8326-49b7-9990-3c6405dcf64d
+  spec:
+    clusterIP: 10.101.25.123
+    clusterIPs:
+    - 10.101.25.123
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 3306
+      protocol: TCP
+      targetPort: 3306
+    selector:
+      app: mysql
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "8"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"api-gateway","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"api-gateway"}},"template":{"metadata":{"labels":{"app":"api-gateway"}},"spec":{"containers":[{"env":[{"name":"EUREKA_CLIENT_SERVICEURL_DEFAULTZONE","valueFrom":{"configMapKeyRef":{"key":"eureka-url","name":"global-config"}}}],"image":"fabimessidev/api-gateway:latest","name":"api-gateway","ports":[{"containerPort":8080}]}]}}}}
+    creationTimestamp: "2025-12-29T17:26:21Z"
+    generation: 8
+    name: api-gateway
+    namespace: default
+    resourceVersion: "52375"
+    uid: e6bbbae3-7bb3-47b2-a00f-075fd63176e6
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: api-gateway
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T18:27:12-03:00"
+        labels:
+          app: api-gateway
+      spec:
+        containers:
+        - env:
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/api-gateway-service:20251231-182542
+          imagePullPolicy: Always
+          name: api-gateway
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    conditions:
+    - lastTransitionTime: "2025-12-29T17:26:21Z"
+      lastUpdateTime: "2025-12-31T21:27:15Z"
+      message: ReplicaSet "api-gateway-6455cf4cbc" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-01-02T15:40:36Z"
+      lastUpdateTime: "2026-01-02T15:40:36Z"
+      message: Deployment does not have minimum availability.
+      reason: MinimumReplicasUnavailable
+      status: "False"
+      type: Available
+    observedGeneration: 8
+    replicas: 1
+    unavailableReplicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"config-server","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"config-server"}},"template":{"metadata":{"labels":{"app":"config-server"}},"spec":{"containers":[{"env":[{"name":"EUREKA_URL","value":"http://eureka-service:8761/eureka/"},{"name":"CONFIG_GIT_URI","value":"https://github.com/Fabimessi4v/Toolrent-microservicios"},{"name":"SERVER_PORT","value":"8888"},{"name":"SPRING_APPLICATION_NAME","value":"ms-config-server"},{"name":"EUREKA_CLIENT_ENABLED","value":"false"}],"image":"fabimessidev/config-server:latest","imagePullPolicy":"Always","livenessProbe":{"httpGet":{"path":"/actuator/health","port":8888},"initialDelaySeconds":60,"periodSeconds":10},"name":"config-server","ports":[{"containerPort":8888}],"readinessProbe":{"httpGet":{"path":"/actuator/health","port":8888},"initialDelaySeconds":30,"periodSeconds":5}}]}}}}
+    creationTimestamp: "2025-12-29T17:26:25Z"
+    generation: 1
+    name: config-server
+    namespace: default
+    resourceVersion: "52376"
+    uid: 9aef72b1-9237-47a6-8d15-1d871d1632ba
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: config-server
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: config-server
+      spec:
+        containers:
+        - env:
+          - name: EUREKA_URL
+            value: http://eureka-service:8761/eureka/
+          - name: CONFIG_GIT_URI
+            value: https://github.com/Fabimessi4v/Toolrent-microservicios
+          - name: SERVER_PORT
+            value: "8888"
+          - name: SPRING_APPLICATION_NAME
+            value: ms-config-server
+          - name: EUREKA_CLIENT_ENABLED
+            value: "false"
+          image: fabimessidev/config-server:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 8888
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: config-server
+          ports:
+          - containerPort: 8888
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 8888
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    conditions:
+    - lastTransitionTime: "2025-12-29T17:26:25Z"
+      lastUpdateTime: "2025-12-29T17:27:56Z"
+      message: ReplicaSet "config-server-6c958467dd" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-01-02T15:40:36Z"
+      lastUpdateTime: "2026-01-02T15:40:36Z"
+      message: Deployment does not have minimum availability.
+      reason: MinimumReplicasUnavailable
+      status: "False"
+      type: Available
+    observedGeneration: 1
+    replicas: 1
+    unavailableReplicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"eureka-server","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"eureka"}},"template":{"metadata":{"labels":{"app":"eureka"}},"spec":{"containers":[{"env":[{"name":"SPRING_CLOUD_CONFIG_URI","value":"http://config-server:8888"},{"name":"SPRING_CLOUD_CONFIG_FAIL_FAST","value":"false"},{"name":"SERVER_PORT","value":"8761"},{"name":"SPRING_APPLICATION_NAME","value":"ms-eureka-server"},{"name":"EUREKA_CLIENT_REGISTER_WITH_EUREKA","value":"false"},{"name":"EUREKA_CLIENT_FETCH_REGISTRY","value":"false"},{"name":"EUREKA_INSTANCE_HOSTNAME","value":"eureka-service"},{"name":"EUREKA_SERVER_ENABLE_SELF_PRESERVATION","value":"false"}],"image":"fabimessidev/eureka-server:latest","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/actuator/health","port":8761},"initialDelaySeconds":60,"periodSeconds":10,"timeoutSeconds":5},"name":"eureka","ports":[{"containerPort":8761}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/actuator/health","port":8761},"initialDelaySeconds":30,"periodSeconds":5,"timeoutSeconds":3},"resources":{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"250m","memory":"256Mi"}}}]}}}}
+    creationTimestamp: "2025-12-29T17:26:11Z"
+    generation: 1
+    name: eureka-server
+    namespace: default
+    resourceVersion: "52370"
+    uid: d1fa588d-ab88-4d0c-b2cc-d88751e429d9
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: eureka
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: eureka
+      spec:
+        containers:
+        - env:
+          - name: SPRING_CLOUD_CONFIG_URI
+            value: http://config-server:8888
+          - name: SPRING_CLOUD_CONFIG_FAIL_FAST
+            value: "false"
+          - name: SERVER_PORT
+            value: "8761"
+          - name: SPRING_APPLICATION_NAME
+            value: ms-eureka-server
+          - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+            value: "false"
+          - name: EUREKA_CLIENT_FETCH_REGISTRY
+            value: "false"
+          - name: EUREKA_INSTANCE_HOSTNAME
+            value: eureka-service
+          - name: EUREKA_SERVER_ENABLE_SELF_PRESERVATION
+            value: "false"
+          image: fabimessidev/eureka-server:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 8761
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: eureka
+          ports:
+          - containerPort: 8761
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 8761
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    conditions:
+    - lastTransitionTime: "2025-12-29T17:26:11Z"
+      lastUpdateTime: "2025-12-29T17:27:23Z"
+      message: ReplicaSet "eureka-server-7d7659b587" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-01-02T15:40:36Z"
+      lastUpdateTime: "2026-01-02T15:40:36Z"
+      message: Deployment does not have minimum availability.
+      reason: MinimumReplicasUnavailable
+      status: "False"
+      type: Available
+    observedGeneration: 1
+    replicas: 1
+    unavailableReplicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "5"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"frontend","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"frontend"}},"template":{"metadata":{"labels":{"app":"frontend"}},"spec":{"containers":[{"env":[{"name":"REACT_APP_API_URL","value":"http://api-gateway:8080"},{"name":"REACT_APP_KEYCLOAK_URL","value":"http://keycloak:8080"},{"name":"REACT_APP_KEYCLOAK_REALM","value":"toolrent"},{"name":"REACT_APP_KEYCLOAK_CLIENT_ID","value":"toolrent-app"}],"image":"fabimessidev/ms-frontend:latest","imagePullPolicy":"Always","name":"frontend","ports":[{"containerPort":80}],"resources":{"limits":{"cpu":"250m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"128Mi"}}}]}}}}
+    creationTimestamp: "2025-12-29T17:26:33Z"
+    generation: 5
+    name: frontend
+    namespace: default
+    resourceVersion: "52377"
+    uid: b332916d-facb-4205-8551-297ca746e8b9
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: frontend
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-29T20:31:23-03:00"
+        labels:
+          app: frontend
+      spec:
+        containers:
+        - env:
+          - name: REACT_APP_API_URL
+            value: http://api-gateway:8080
+          - name: REACT_APP_KEYCLOAK_URL
+            value: http://keycloak:8080
+          - name: REACT_APP_KEYCLOAK_REALM
+            value: toolrent
+          - name: REACT_APP_KEYCLOAK_CLIENT_ID
+            value: toolrent-app
+          image: fabimessidev/ms-frontend:20251229-203048
+          imagePullPolicy: Always
+          name: frontend
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 250m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    conditions:
+    - lastTransitionTime: "2026-01-02T15:30:15Z"
+      lastUpdateTime: "2026-01-02T15:30:15Z"
+      message: ReplicaSet "frontend-5959f5886f" has timed out progressing.
+      reason: ProgressDeadlineExceeded
+      status: "False"
+      type: Progressing
+    - lastTransitionTime: "2026-01-02T15:40:36Z"
+      lastUpdateTime: "2026-01-02T15:40:36Z"
+      message: Deployment does not have minimum availability.
+      reason: MinimumReplicasUnavailable
+      status: "False"
+      type: Available
+    observedGeneration: 5
+    replicas: 2
+    unavailableReplicas: 2
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"keycloak","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"keycloak"}},"template":{"metadata":{"labels":{"app":"keycloak"}},"spec":{"containers":[{"args":["start-dev"],"env":[{"name":"KEYCLOAK_ADMIN","value":"admin"},{"name":"KEYCLOAK_ADMIN_PASSWORD","value":"admin123"},{"name":"KC_DB","value":"mysql"},{"name":"KC_DB_URL","value":"jdbc:mysql://mysql-service:3306/keycloak_db? characterEncoding=UTF-8"},{"name":"KC_DB_USERNAME","value":"root"},{"name":"KC_DB_PASSWORD","valueFrom":{"secretKeyRef":{"key":"mysql-root-password","name":"db-credentials"}}},{"name":"KC_HOSTNAME_STRICT","value":"false"},{"name":"KC_HOSTNAME_STRICT_HTTPS","value":"false"},{"name":"KC_HTTP_ENABLED","value":"true"},{"name":"KC_LOG_LEVEL","value":"INFO"}],"image":"quay.io/keycloak/keycloak:23.0","name":"keycloak","ports":[{"containerPort":8080}],"resources":{"limits":{"cpu":"1000m","memory":"1Gi"},"requests":{"cpu":"500m","memory":"512Mi"}}}],"initContainers":[{"command":["sh","-c","mysql -h mysql-service -u root -p${MYSQL_ROOT_PASSWORD} -e \"CREATE DATABASE IF NOT EXISTS keycloak_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\"\necho \"Base de datos keycloak_db creada o ya existe\"\n"],"env":[{"name":"MYSQL_ROOT_PASSWORD","valueFrom":{"secretKeyRef":{"key":"mysql-root-password","name":"db-credentials"}}}],"image":"mysql:8.0","name":"create-keycloak-db"}]}}}}
+    creationTimestamp: "2025-12-29T17:35:35Z"
+    generation: 2
+    name: keycloak
+    namespace: default
+    resourceVersion: "52373"
+    uid: c7680326-524e-4b14-8c63-3bd53613928f
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: keycloak
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-01-02T12:31:25-03:00"
+        labels:
+          app: keycloak
+      spec:
+        containers:
+        - args:
+          - start-dev
+          env:
+          - name: KEYCLOAK_ADMIN
+            value: admin
+          - name: KEYCLOAK_ADMIN_PASSWORD
+            value: admin123
+          - name: KC_DB
+            value: mysql
+          - name: KC_DB_URL
+            value: jdbc:mysql://mysql-service:3306/keycloak_db? characterEncoding=UTF-8
+          - name: KC_DB_USERNAME
+            value: root
+          - name: KC_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: KC_HOSTNAME_STRICT
+            value: "false"
+          - name: KC_HOSTNAME_STRICT_HTTPS
+            value: "false"
+          - name: KC_HTTP_ENABLED
+            value: "true"
+          - name: KC_LOG_LEVEL
+            value: INFO
+          image: quay.io/keycloak/keycloak:23.0
+          imagePullPolicy: IfNotPresent
+          name: keycloak
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - sh
+          - -c
+          - |
+            mysql -h mysql-service -u root -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS keycloak_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+            echo "Base de datos keycloak_db creada o ya existe"
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          name: create-keycloak-db
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    conditions:
+    - lastTransitionTime: "2025-12-29T17:35:35Z"
+      lastUpdateTime: "2026-01-02T15:33:01Z"
+      message: ReplicaSet "keycloak-f95749d9f" is progressing.
+      reason: ReplicaSetUpdated
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-01-02T15:40:36Z"
+      lastUpdateTime: "2026-01-02T15:40:36Z"
+      message: Deployment does not have minimum availability.
+      reason: MinimumReplicasUnavailable
+      status: "False"
+      type: Available
+    observedGeneration: 2
+    replicas: 2
+    unavailableReplicas: 2
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "23"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"ms-inventory","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"ms-inventory"}},"template":{"metadata":{"labels":{"app":"ms-inventory"}},"spec":{"containers":[{"env":[{"name":"SPRING_DATASOURCE_URL","value":"jdbc:mysql://mysql-service:3306/toolrentdb"},{"name":"SERVER_PORT","value":"8080"},{"name":"SPRING_DATASOURCE_PASSWORD","valueFrom":{"secretKeyRef":{"key":"mysql-root-password","name":"db-credentials"}}},{"name":"EUREKA_CLIENT_SERVICEURL_DEFAULTZONE","valueFrom":{"configMapKeyRef":{"key":"eureka-url","name":"global-config"}}}],"image":"fabimessidev/ms-inventario:latest","name":"ms-inventory","ports":[{"containerPort":8080}]}]}}}}
+    creationTimestamp: "2025-12-29T17:26:16Z"
+    generation: 23
+    name: ms-inventory
+    namespace: default
+    resourceVersion: "52372"
+    uid: a54b6089-0fc2-45f5-ae69-f30bff9370fb
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: ms-inventory
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T18:25:15-03:00"
+        labels:
+          app: ms-inventory
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/toolrentdb
+          - name: SERVER_PORT
+            value: "8080"
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-inventory:20251231-182120
+          imagePullPolicy: Always
+          name: ms-inventory
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    conditions:
+    - lastTransitionTime: "2025-12-29T17:26:16Z"
+      lastUpdateTime: "2025-12-31T21:25:17Z"
+      message: ReplicaSet "ms-inventory-bd8d7ccf" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-01-02T15:40:36Z"
+      lastUpdateTime: "2026-01-02T15:40:36Z"
+      message: Deployment does not have minimum availability.
+      reason: MinimumReplicasUnavailable
+      status: "False"
+      type: Available
+    observedGeneration: 23
+    replicas: 1
+    unavailableReplicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"ms-loans","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"ms-loans"}},"template":{"metadata":{"labels":{"app":"ms-loans"}},"spec":{"containers":[{"env":[{"name":"SPRING_DATASOURCE_URL","value":"jdbc:mysql://mysql-service:3306/loans_db"},{"name":"SPRING_DATASOURCE_PASSWORD","valueFrom":{"secretKeyRef":{"key":"mysql-root-password","name":"db-credentials"}}},{"name":"EUREKA_CLIENT_SERVICEURL_DEFAULTZONE","valueFrom":{"configMapKeyRef":{"key":"eureka-url","name":"global-config"}}}],"image":"fabimessidev/ms-prestamos:latest","name":"ms-loans"}]}}}}
+    creationTimestamp: "2025-12-29T17:26:16Z"
+    generation: 1
+    name: ms-loans
+    namespace: default
+    resourceVersion: "52053"
+    uid: 364a50a3-6de3-4b51-86a6-367a04f73a95
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: ms-loans
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: ms-loans
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/loans_db
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-prestamos:latest
+          imagePullPolicy: Always
+          name: ms-loans
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    conditions:
+    - lastTransitionTime: "2025-12-29T17:26:16Z"
+      lastUpdateTime: "2025-12-29T17:27:00Z"
+      message: ReplicaSet "ms-loans-786b9f5874" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-01-02T15:32:24Z"
+      lastUpdateTime: "2026-01-02T15:32:24Z"
+      message: Deployment does not have minimum availability.
+      reason: MinimumReplicasUnavailable
+      status: "False"
+      type: Available
+    observedGeneration: 1
+    replicas: 1
+    unavailableReplicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"mysql-server","namespace":"default"},"spec":{"selector":{"matchLabels":{"app":"mysql"}},"template":{"metadata":{"labels":{"app":"mysql"}},"spec":{"containers":[{"env":[{"name":"MYSQL_ROOT_PASSWORD","valueFrom":{"secretKeyRef":{"key":"mysql-root-password","name":"db-credentials"}}}],"image":"mysql:8.0","name":"mysql","ports":[{"containerPort":3306}],"volumeMounts":[{"mountPath":"/docker-entrypoint-initdb.d","name":"mysql-init"}]}],"volumes":[{"configMap":{"name":"mysql-init-scripts"},"name":"mysql-init"}]}}}}
+    creationTimestamp: "2025-12-29T17:26:06Z"
+    generation: 1
+    name: mysql-server
+    namespace: default
+    resourceVersion: "52371"
+    uid: 76a9fe30-38bf-41c3-8514-b342648e9aa9
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: mysql
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: mysql
+      spec:
+        containers:
+        - env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          name: mysql
+          ports:
+          - containerPort: 3306
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /docker-entrypoint-initdb.d
+            name: mysql-init
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: mysql-init-scripts
+          name: mysql-init
+  status:
+    conditions:
+    - lastTransitionTime: "2025-12-29T17:26:06Z"
+      lastUpdateTime: "2025-12-29T17:26:35Z"
+      message: ReplicaSet "mysql-server-9d4b89db9" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-01-02T15:40:36Z"
+      lastUpdateTime: "2026-01-02T15:40:36Z"
+      message: Deployment does not have minimum availability.
+      reason: MinimumReplicasUnavailable
+      status: "False"
+      type: Available
+    observedGeneration: 1
+    replicas: 1
+    unavailableReplicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: "2025-12-31T19:55:42Z"
+    generation: 2
+    labels:
+      app: api-gateway
+      pod-template-hash: 5685d6d986
+    name: api-gateway-5685d6d986
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: api-gateway
+      uid: e6bbbae3-7bb3-47b2-a00f-075fd63176e6
+    resourceVersion: "45518"
+    uid: 6f8c63d6-0966-4f4d-8a57-f5c4ecb4fe8a
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: api-gateway
+        pod-template-hash: 5685d6d986
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T16:34:06-03:00"
+        labels:
+          app: api-gateway
+          pod-template-hash: 5685d6d986
+      spec:
+        containers:
+        - env:
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/api-gateway-service:20251231-164207
+          imagePullPolicy: Always
+          name: api-gateway
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "8"
+    creationTimestamp: "2025-12-31T21:27:12Z"
+    generation: 2
+    labels:
+      app: api-gateway
+      pod-template-hash: 6455cf4cbc
+    name: api-gateway-6455cf4cbc
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: api-gateway
+      uid: e6bbbae3-7bb3-47b2-a00f-075fd63176e6
+    resourceVersion: "52354"
+    uid: d1190ec5-a353-4d82-bc2c-22473eb48370
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: api-gateway
+        pod-template-hash: 6455cf4cbc
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T18:27:12-03:00"
+        labels:
+          app: api-gateway
+          pod-template-hash: 6455cf4cbc
+      spec:
+        containers:
+        - env:
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/api-gateway-service:20251231-182542
+          imagePullPolicy: Always
+          name: api-gateway
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: "2025-12-31T21:27:08Z"
+    generation: 2
+    labels:
+      app: api-gateway
+      pod-template-hash: 66554754bf
+    name: api-gateway-66554754bf
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: api-gateway
+      uid: e6bbbae3-7bb3-47b2-a00f-075fd63176e6
+    resourceVersion: "50502"
+    uid: b179f653-44f9-492c-8c2f-167dd6faabac
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: api-gateway
+        pod-template-hash: 66554754bf
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T17:42:05-03:00"
+        labels:
+          app: api-gateway
+          pod-template-hash: 66554754bf
+      spec:
+        containers:
+        - env:
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/api-gateway-service:20251231-182542
+          imagePullPolicy: Always
+          name: api-gateway
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2025-12-31T19:34:01Z"
+    generation: 2
+    labels:
+      app: api-gateway
+      pod-template-hash: 667cbf58d7
+    name: api-gateway-667cbf58d7
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: api-gateway
+      uid: e6bbbae3-7bb3-47b2-a00f-075fd63176e6
+    resourceVersion: "44296"
+    uid: cfb08198-8f3f-4fa6-b7ea-a5bddb8e62fa
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: api-gateway
+        pod-template-hash: 667cbf58d7
+    template:
+      metadata:
+        labels:
+          app: api-gateway
+          pod-template-hash: 667cbf58d7
+      spec:
+        containers:
+        - env:
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/api-gateway-service:20251231-163226
+          imagePullPolicy: Always
+          name: api-gateway
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-29T17:26:21Z"
+    generation: 2
+    labels:
+      app: api-gateway
+      pod-template-hash: 7f9855b455
+    name: api-gateway-7f9855b455
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: api-gateway
+      uid: e6bbbae3-7bb3-47b2-a00f-075fd63176e6
+    resourceVersion: "44334"
+    uid: a0fa52e6-1d59-492e-baa0-8fbafd76cef5
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: api-gateway
+        pod-template-hash: 7f9855b455
+    template:
+      metadata:
+        labels:
+          app: api-gateway
+          pod-template-hash: 7f9855b455
+      spec:
+        containers:
+        - env:
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/api-gateway:latest
+          imagePullPolicy: Always
+          name: api-gateway
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: "2025-12-31T19:34:05Z"
+    generation: 3
+    labels:
+      app: api-gateway
+      pod-template-hash: 8bd6f66c6
+    name: api-gateway-8bd6f66c6
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: api-gateway
+      uid: e6bbbae3-7bb3-47b2-a00f-075fd63176e6
+    resourceVersion: "45560"
+    uid: 6c6b25b8-5bd7-4f00-b3ba-e184f8f15a56
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: api-gateway
+        pod-template-hash: 8bd6f66c6
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T16:34:06-03:00"
+        labels:
+          app: api-gateway
+          pod-template-hash: 8bd6f66c6
+      spec:
+        containers:
+        - env:
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/api-gateway-service:20251231-163226
+          imagePullPolicy: Always
+          name: api-gateway
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "6"
+    creationTimestamp: "2025-12-31T20:42:05Z"
+    generation: 2
+    labels:
+      app: api-gateway
+      pod-template-hash: bc6875bff
+    name: api-gateway-bc6875bff
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: api-gateway
+      uid: e6bbbae3-7bb3-47b2-a00f-075fd63176e6
+    resourceVersion: "50537"
+    uid: 64270c00-0549-42ca-b216-400fcecb7e54
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: api-gateway
+        pod-template-hash: bc6875bff
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T17:42:05-03:00"
+        labels:
+          app: api-gateway
+          pod-template-hash: bc6875bff
+      spec:
+        containers:
+        - env:
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/api-gateway-service:20251231-164207
+          imagePullPolicy: Always
+          name: api-gateway
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "5"
+    creationTimestamp: "2025-12-31T19:55:46Z"
+    generation: 3
+    labels:
+      app: api-gateway
+      pod-template-hash: fb9fdb8f
+    name: api-gateway-fb9fdb8f
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: api-gateway
+      uid: e6bbbae3-7bb3-47b2-a00f-075fd63176e6
+    resourceVersion: "48248"
+    uid: 663d663f-fba0-4d31-b239-e39d638ec19d
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: api-gateway
+        pod-template-hash: fb9fdb8f
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T16:55:46-03:00"
+        labels:
+          app: api-gateway
+          pod-template-hash: fb9fdb8f
+      spec:
+        containers:
+        - env:
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/api-gateway-service:20251231-164207
+          imagePullPolicy: Always
+          name: api-gateway
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-29T17:26:25Z"
+    generation: 1
+    labels:
+      app: config-server
+      pod-template-hash: 6c958467dd
+    name: config-server-6c958467dd
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: config-server
+      uid: 9aef72b1-9237-47a6-8d15-1d871d1632ba
+    resourceVersion: "52356"
+    uid: 2b561b8d-df96-46ab-a037-57260d0b1a1a
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: config-server
+        pod-template-hash: 6c958467dd
+    template:
+      metadata:
+        labels:
+          app: config-server
+          pod-template-hash: 6c958467dd
+      spec:
+        containers:
+        - env:
+          - name: EUREKA_URL
+            value: http://eureka-service:8761/eureka/
+          - name: CONFIG_GIT_URI
+            value: https://github.com/Fabimessi4v/Toolrent-microservicios
+          - name: SERVER_PORT
+            value: "8888"
+          - name: SPRING_APPLICATION_NAME
+            value: ms-config-server
+          - name: EUREKA_CLIENT_ENABLED
+            value: "false"
+          image: fabimessidev/config-server:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 8888
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: config-server
+          ports:
+          - containerPort: 8888
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 8888
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-29T17:26:11Z"
+    generation: 1
+    labels:
+      app: eureka
+      pod-template-hash: 7d7659b587
+    name: eureka-server-7d7659b587
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: eureka-server
+      uid: d1fa588d-ab88-4d0c-b2cc-d88751e429d9
+    resourceVersion: "52350"
+    uid: 60a08ab2-0753-4577-8563-767e6c56c35d
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: eureka
+        pod-template-hash: 7d7659b587
+    template:
+      metadata:
+        labels:
+          app: eureka
+          pod-template-hash: 7d7659b587
+      spec:
+        containers:
+        - env:
+          - name: SPRING_CLOUD_CONFIG_URI
+            value: http://config-server:8888
+          - name: SPRING_CLOUD_CONFIG_FAIL_FAST
+            value: "false"
+          - name: SERVER_PORT
+            value: "8761"
+          - name: SPRING_APPLICATION_NAME
+            value: ms-eureka-server
+          - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+            value: "false"
+          - name: EUREKA_CLIENT_FETCH_REGISTRY
+            value: "false"
+          - name: EUREKA_INSTANCE_HOSTNAME
+            value: eureka-service
+          - name: EUREKA_SERVER_ENABLE_SELF_PRESERVATION
+            value: "false"
+          image: fabimessidev/eureka-server:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 8761
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: eureka
+          ports:
+          - containerPort: 8761
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 8761
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-29T17:26:33Z"
+    generation: 2
+    labels:
+      app: frontend
+      pod-template-hash: 5455fd6c48
+    name: frontend-5455fd6c48
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b332916d-facb-4205-8551-297ca746e8b9
+    resourceVersion: "1419"
+    uid: b3218578-5482-44fd-a704-dfd6f972e2b6
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: 5455fd6c48
+    template:
+      metadata:
+        labels:
+          app: frontend
+          pod-template-hash: 5455fd6c48
+      spec:
+        containers:
+        - env:
+          - name: REACT_APP_API_URL
+            value: http://api-gateway:8080
+          - name: REACT_APP_KEYCLOAK_URL
+            value: http://keycloak:8080
+          - name: REACT_APP_KEYCLOAK_REALM
+            value: toolrent
+          - name: REACT_APP_KEYCLOAK_CLIENT_ID
+            value: toolrent-app
+          image: fabimessidev/ms-frontend:latest
+          imagePullPolicy: Always
+          name: frontend
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 250m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "5"
+    creationTimestamp: "2025-12-29T23:31:23Z"
+    generation: 2
+    labels:
+      app: frontend
+      pod-template-hash: 5959f5886f
+    name: frontend-5959f5886f
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b332916d-facb-4205-8551-297ca746e8b9
+    resourceVersion: "18463"
+    uid: 502fc9ef-6246-4c89-aa09-ebaf4019796a
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: 5959f5886f
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-29T20:31:23-03:00"
+        labels:
+          app: frontend
+          pod-template-hash: 5959f5886f
+      spec:
+        containers:
+        - env:
+          - name: REACT_APP_API_URL
+            value: http://api-gateway:8080
+          - name: REACT_APP_KEYCLOAK_URL
+            value: http://keycloak:8080
+          - name: REACT_APP_KEYCLOAK_REALM
+            value: toolrent
+          - name: REACT_APP_KEYCLOAK_CLIENT_ID
+            value: toolrent-app
+          image: fabimessidev/ms-frontend:20251229-203048
+          imagePullPolicy: Always
+          name: frontend
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 250m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2025-12-29T17:38:28Z"
+    generation: 2
+    labels:
+      app: frontend
+      pod-template-hash: 76745b97f4
+    name: frontend-76745b97f4
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b332916d-facb-4205-8551-297ca746e8b9
+    resourceVersion: "1379"
+    uid: 127edc02-727b-4b76-af12-f93b5c4fe8cb
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: 76745b97f4
+    template:
+      metadata:
+        labels:
+          app: frontend
+          pod-template-hash: 76745b97f4
+      spec:
+        containers:
+        - env:
+          - name: REACT_APP_API_URL
+            value: http://api-gateway:8080
+          - name: REACT_APP_KEYCLOAK_URL
+            value: http://keycloak:8080
+          - name: REACT_APP_KEYCLOAK_REALM
+            value: toolrent
+          - name: REACT_APP_KEYCLOAK_CLIENT_ID
+            value: toolrent-app
+          image: fabimessidev/ms-frontend:20251229-143759
+          imagePullPolicy: Always
+          name: frontend
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 250m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: "2025-12-29T17:38:33Z"
+    generation: 2
+    labels:
+      app: frontend
+      pod-template-hash: 86d84bfc98
+    name: frontend-86d84bfc98
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b332916d-facb-4205-8551-297ca746e8b9
+    resourceVersion: "52358"
+    uid: 8574712a-8c28-47de-8f30-a837b27bab87
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: 86d84bfc98
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-29T14:38:33-03:00"
+        labels:
+          app: frontend
+          pod-template-hash: 86d84bfc98
+      spec:
+        containers:
+        - env:
+          - name: REACT_APP_API_URL
+            value: http://api-gateway:8080
+          - name: REACT_APP_KEYCLOAK_URL
+            value: http://keycloak:8080
+          - name: REACT_APP_KEYCLOAK_REALM
+            value: toolrent
+          - name: REACT_APP_KEYCLOAK_CLIENT_ID
+            value: toolrent-app
+          image: fabimessidev/ms-frontend:20251229-143759
+          imagePullPolicy: Always
+          name: frontend
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 250m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: "2025-12-29T23:31:18Z"
+    generation: 2
+    labels:
+      app: frontend
+      pod-template-hash: b7669d78b
+    name: frontend-b7669d78b
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b332916d-facb-4205-8551-297ca746e8b9
+    resourceVersion: "18455"
+    uid: b58f08eb-cb15-4a5f-964f-7ad546f17ed7
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: b7669d78b
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-29T14:38:33-03:00"
+        labels:
+          app: frontend
+          pod-template-hash: b7669d78b
+      spec:
+        containers:
+        - env:
+          - name: REACT_APP_API_URL
+            value: http://api-gateway:8080
+          - name: REACT_APP_KEYCLOAK_URL
+            value: http://keycloak:8080
+          - name: REACT_APP_KEYCLOAK_REALM
+            value: toolrent
+          - name: REACT_APP_KEYCLOAK_CLIENT_ID
+            value: toolrent-app
+          image: fabimessidev/ms-frontend:20251229-203048
+          imagePullPolicy: Always
+          name: frontend
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 250m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-29T17:35:35Z"
+    generation: 1
+    labels:
+      app: keycloak
+      pod-template-hash: 85bc4bfff9
+    name: keycloak-85bc4bfff9
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: keycloak
+      uid: c7680326-524e-4b14-8c63-3bd53613928f
+    resourceVersion: "52352"
+    uid: 9052f5e0-46a9-48ce-ad52-aebba7cbce91
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: keycloak
+        pod-template-hash: 85bc4bfff9
+    template:
+      metadata:
+        labels:
+          app: keycloak
+          pod-template-hash: 85bc4bfff9
+      spec:
+        containers:
+        - args:
+          - start-dev
+          env:
+          - name: KEYCLOAK_ADMIN
+            value: admin
+          - name: KEYCLOAK_ADMIN_PASSWORD
+            value: admin123
+          - name: KC_DB
+            value: mysql
+          - name: KC_DB_URL
+            value: jdbc:mysql://mysql-service:3306/keycloak_db? characterEncoding=UTF-8
+          - name: KC_DB_USERNAME
+            value: root
+          - name: KC_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: KC_HOSTNAME_STRICT
+            value: "false"
+          - name: KC_HOSTNAME_STRICT_HTTPS
+            value: "false"
+          - name: KC_HTTP_ENABLED
+            value: "true"
+          - name: KC_LOG_LEVEL
+            value: INFO
+          image: quay.io/keycloak/keycloak:23.0
+          imagePullPolicy: IfNotPresent
+          name: keycloak
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - sh
+          - -c
+          - |
+            mysql -h mysql-service -u root -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS keycloak_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+            echo "Base de datos keycloak_db creada o ya existe"
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          name: create-keycloak-db
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2026-01-02T15:31:25Z"
+    generation: 1
+    labels:
+      app: keycloak
+      pod-template-hash: f95749d9f
+    name: keycloak-f95749d9f
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: keycloak
+      uid: c7680326-524e-4b14-8c63-3bd53613928f
+    resourceVersion: "51994"
+    uid: 1ddaf178-9a9b-4e74-92a0-094a974ea2f1
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: keycloak
+        pod-template-hash: f95749d9f
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-01-02T12:31:25-03:00"
+        labels:
+          app: keycloak
+          pod-template-hash: f95749d9f
+      spec:
+        containers:
+        - args:
+          - start-dev
+          env:
+          - name: KEYCLOAK_ADMIN
+            value: admin
+          - name: KEYCLOAK_ADMIN_PASSWORD
+            value: admin123
+          - name: KC_DB
+            value: mysql
+          - name: KC_DB_URL
+            value: jdbc:mysql://mysql-service:3306/keycloak_db? characterEncoding=UTF-8
+          - name: KC_DB_USERNAME
+            value: root
+          - name: KC_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: KC_HOSTNAME_STRICT
+            value: "false"
+          - name: KC_HOSTNAME_STRICT_HTTPS
+            value: "false"
+          - name: KC_HTTP_ENABLED
+            value: "true"
+          - name: KC_LOG_LEVEL
+            value: INFO
+          image: quay.io/keycloak/keycloak:23.0
+          imagePullPolicy: IfNotPresent
+          name: keycloak
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - sh
+          - -c
+          - |
+            mysql -h mysql-service -u root -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS keycloak_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+            echo "Base de datos keycloak_db creada o ya existe"
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          name: create-keycloak-db
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "14"
+    creationTimestamp: "2025-12-31T19:12:59Z"
+    generation: 3
+    labels:
+      app: ms-inventory
+      pod-template-hash: 565c5c759b
+    name: ms-inventory-565c5c759b
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ms-inventory
+      uid: a54b6089-0fc2-45f5-ae69-f30bff9370fb
+    resourceVersion: "45988"
+    uid: c39dcbe9-f8ed-4da7-a5ee-fae752fbc9b4
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: ms-inventory
+        pod-template-hash: 565c5c759b
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T16:12:59-03:00"
+        labels:
+          app: ms-inventory
+          pod-template-hash: 565c5c759b
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/toolrentdb
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-inventory:20251231-161125
+          imagePullPolicy: Always
+          name: ms-inventory
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "20"
+    creationTimestamp: "2025-12-31T21:05:48Z"
+    generation: 2
+    labels:
+      app: ms-inventory
+      pod-template-hash: 6798d466ff
+    name: ms-inventory-6798d466ff
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ms-inventory
+      uid: a54b6089-0fc2-45f5-ae69-f30bff9370fb
+    resourceVersion: "49257"
+    uid: e5aa1c36-cf7c-4d0e-ba17-00f9f294561b
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: ms-inventory
+        pod-template-hash: 6798d466ff
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T17:41:59-03:00"
+        labels:
+          app: ms-inventory
+          pod-template-hash: 6798d466ff
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/toolrentdb
+          - name: SERVER_PORT
+            value: "8080"
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-inventario:latest
+          imagePullPolicy: Always
+          name: ms-inventory
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "18"
+    creationTimestamp: "2025-12-31T20:07:44Z"
+    generation: 3
+    labels:
+      app: ms-inventory
+      pod-template-hash: 6d5b6d898d
+    name: ms-inventory-6d5b6d898d
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ms-inventory
+      uid: a54b6089-0fc2-45f5-ae69-f30bff9370fb
+    resourceVersion: "48204"
+    uid: 10bf095e-be07-4dbd-9b9d-d26e71c8d0ee
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: ms-inventory
+        pod-template-hash: 6d5b6d898d
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T17:07:44-03:00"
+        labels:
+          app: ms-inventory
+          pod-template-hash: 6d5b6d898d
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/toolrentdb
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-inventory:20251231-170629
+          imagePullPolicy: Always
+          name: ms-inventory
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "19"
+    creationTimestamp: "2025-12-31T20:41:59Z"
+    generation: 2
+    labels:
+      app: ms-inventory
+      pod-template-hash: 75dc574f9b
+    name: ms-inventory-75dc574f9b
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ms-inventory
+      uid: a54b6089-0fc2-45f5-ae69-f30bff9370fb
+    resourceVersion: "49167"
+    uid: 5fce0b0f-b806-4f65-93df-39727c61b74a
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: ms-inventory
+        pod-template-hash: 75dc574f9b
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T17:41:59-03:00"
+        labels:
+          app: ms-inventory
+          pod-template-hash: 75dc574f9b
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/toolrentdb
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-inventory:20251231-170629
+          imagePullPolicy: Always
+          name: ms-inventory
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "17"
+    creationTimestamp: "2025-12-31T20:07:40Z"
+    generation: 2
+    labels:
+      app: ms-inventory
+      pod-template-hash: 778d79f485
+    name: ms-inventory-778d79f485
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ms-inventory
+      uid: a54b6089-0fc2-45f5-ae69-f30bff9370fb
+    resourceVersion: "46305"
+    uid: b19a4b48-78b4-423f-9151-3b48a8245093
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: ms-inventory
+        pod-template-hash: 778d79f485
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T17:02:24-03:00"
+        labels:
+          app: ms-inventory
+          pod-template-hash: 778d79f485
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/toolrentdb
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-inventory:20251231-170629
+          imagePullPolicy: Always
+          name: ms-inventory
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "22"
+    creationTimestamp: "2025-12-31T21:25:10Z"
+    generation: 2
+    labels:
+      app: ms-inventory
+      pod-template-hash: 7bd5b5c685
+    name: ms-inventory-7bd5b5c685
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ms-inventory
+      uid: a54b6089-0fc2-45f5-ae69-f30bff9370fb
+    resourceVersion: "50317"
+    uid: 1f469fa0-fd52-4ba7-834e-f5d821c37c8f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: ms-inventory
+        pod-template-hash: 7bd5b5c685
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T18:06:21-03:00"
+        labels:
+          app: ms-inventory
+          pod-template-hash: 7bd5b5c685
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/toolrentdb
+          - name: SERVER_PORT
+            value: "8080"
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-inventory:20251231-182120
+          imagePullPolicy: Always
+          name: ms-inventory
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "15"
+    creationTimestamp: "2025-12-31T20:02:19Z"
+    generation: 2
+    labels:
+      app: ms-inventory
+      pod-template-hash: 85997c99c4
+    name: ms-inventory-85997c99c4
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ms-inventory
+      uid: a54b6089-0fc2-45f5-ae69-f30bff9370fb
+    resourceVersion: "45946"
+    uid: 46e4ebf9-be81-43c2-988b-5345ac337d5c
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: ms-inventory
+        pod-template-hash: 85997c99c4
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T16:12:59-03:00"
+        labels:
+          app: ms-inventory
+          pod-template-hash: 85997c99c4
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/toolrentdb
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-inventory:20251231-170042
+          imagePullPolicy: Always
+          name: ms-inventory
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "16"
+    creationTimestamp: "2025-12-31T20:02:24Z"
+    generation: 3
+    labels:
+      app: ms-inventory
+      pod-template-hash: 9d9d4974
+    name: ms-inventory-9d9d4974
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ms-inventory
+      uid: a54b6089-0fc2-45f5-ae69-f30bff9370fb
+    resourceVersion: "46351"
+    uid: 07931415-9c44-441b-bd9b-997f579da89f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: ms-inventory
+        pod-template-hash: 9d9d4974
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T17:02:24-03:00"
+        labels:
+          app: ms-inventory
+          pod-template-hash: 9d9d4974
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/toolrentdb
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-inventory:20251231-170042
+          imagePullPolicy: Always
+          name: ms-inventory
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "23"
+    creationTimestamp: "2025-12-31T21:25:15Z"
+    generation: 2
+    labels:
+      app: ms-inventory
+      pod-template-hash: bd8d7ccf
+    name: ms-inventory-bd8d7ccf
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ms-inventory
+      uid: a54b6089-0fc2-45f5-ae69-f30bff9370fb
+    resourceVersion: "52349"
+    uid: ff462f72-7dd9-4595-b5b3-6b57c0cfc505
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: ms-inventory
+        pod-template-hash: bd8d7ccf
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T18:25:15-03:00"
+        labels:
+          app: ms-inventory
+          pod-template-hash: bd8d7ccf
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/toolrentdb
+          - name: SERVER_PORT
+            value: "8080"
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-inventory:20251231-182120
+          imagePullPolicy: Always
+          name: ms-inventory
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "13"
+    creationTimestamp: "2025-12-31T19:12:54Z"
+    generation: 2
+    labels:
+      app: ms-inventory
+      pod-template-hash: bf67b98cf
+    name: ms-inventory-bf67b98cf
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ms-inventory
+      uid: a54b6089-0fc2-45f5-ae69-f30bff9370fb
+    resourceVersion: "43135"
+    uid: 383f571d-d94a-4d93-a942-979702bfe524
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: ms-inventory
+        pod-template-hash: bf67b98cf
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T15:11:50-03:00"
+        labels:
+          app: ms-inventory
+          pod-template-hash: bf67b98cf
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/toolrentdb
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-inventory:20251231-161125
+          imagePullPolicy: Always
+          name: ms-inventory
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "21"
+    creationTimestamp: "2025-12-31T21:06:21Z"
+    generation: 2
+    labels:
+      app: ms-inventory
+      pod-template-hash: cc58c7f9b
+    name: ms-inventory-cc58c7f9b
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ms-inventory
+      uid: a54b6089-0fc2-45f5-ae69-f30bff9370fb
+    resourceVersion: "50356"
+    uid: 71c32ba8-d0f4-438c-8db6-91981633ae91
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: ms-inventory
+        pod-template-hash: cc58c7f9b
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-31T18:06:21-03:00"
+        labels:
+          app: ms-inventory
+          pod-template-hash: cc58c7f9b
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/toolrentdb
+          - name: SERVER_PORT
+            value: "8080"
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-inventario:latest
+          imagePullPolicy: Always
+          name: ms-inventory
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-29T17:26:16Z"
+    generation: 1
+    labels:
+      app: ms-loans
+      pod-template-hash: 786b9f5874
+    name: ms-loans-786b9f5874
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ms-loans
+      uid: 364a50a3-6de3-4b51-86a6-367a04f73a95
+    resourceVersion: "52052"
+    uid: e80c7136-0d46-47e7-923d-2cd08ad956df
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: ms-loans
+        pod-template-hash: 786b9f5874
+    template:
+      metadata:
+        labels:
+          app: ms-loans
+          pod-template-hash: 786b9f5874
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/loans_db
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                key: eureka-url
+                name: global-config
+          image: fabimessidev/ms-prestamos:latest
+          imagePullPolicy: Always
+          name: ms-loans
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-29T17:26:06Z"
+    generation: 1
+    labels:
+      app: mysql
+      pod-template-hash: 9d4b89db9
+    name: mysql-server-9d4b89db9
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: mysql-server
+      uid: 76a9fe30-38bf-41c3-8514-b342648e9aa9
+    resourceVersion: "52351"
+    uid: fe0cba32-ebdb-4e62-87bb-96ca39f1672b
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: mysql
+        pod-template-hash: 9d4b89db9
+    template:
+      metadata:
+        labels:
+          app: mysql
+          pod-template-hash: 9d4b89db9
+      spec:
+        containers:
+        - env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-root-password
+                name: db-credentials
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          name: mysql
+          ports:
+          - containerPort: 3306
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /docker-entrypoint-initdb.d
+            name: mysql-init
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: mysql-init-scripts
+          name: mysql-init
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""

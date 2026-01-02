@@ -1,0 +1,255 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    eureka-url: http://eureka-service:8761/eureka/
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"eureka-url":"http://eureka-service:8761/eureka/"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"global-config","namespace":"default"}}
+    creationTimestamp: "2025-12-29T17:26:01Z"
+    name: global-config
+    namespace: default
+    resourceVersion: "434"
+    uid: 5f66ad20-b995-4e8d-a1d8-5b0784ed2186
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIDBjCCAe6gAwIBAgIBATANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwptaW5p
+      a3ViZUNBMB4XDTI1MTIyNjE5MTUxMVoXDTM1MTIyNTE5MTUxMVowFTETMBEGA1UE
+      AxMKbWluaWt1YmVDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALd6
+      wmGEAUSM2iPLT6j3unNs7ScPkj0yQCI2EFcOVgT0NRcrKw/L7+5baLW2C4Djrda/
+      Szgz91oSJk+P2ofSwDqsMYcZTz2f1WA/XWQgfpJ0hlnKOg0izwkVMBVISJeGG63V
+      o6N8ZtYXQJc3PuUIIx7w0DImQivQqc0b+Zzxi/nfIQ3jkXE88uVIp5TvF2z3rn4Q
+      6vPz68/TrivVBRlSZxbtX4TxTwtj7zxQydoQ1hWV7/PDKwEHmNVZIpgSgU7Jkcqj
+      jTiE4JQxdni4kAFqg8eh4jr3+VxLikSE+SjZblqkIAXSuqiKva5b2xGUJaELik8G
+      GgcQyFozfF4X44Epd28CAwEAAaNhMF8wDgYDVR0PAQH/BAQDAgKkMB0GA1UdJQQW
+      MBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQW
+      BBTGYA49WkDbvNemAc+4no0bzs3MqjANBgkqhkiG9w0BAQsFAAOCAQEAG8dsV6N4
+      USnWAueRhPmmcDexjQ0Dev3e51TXfCDA6lmmMFFBj+oSorjlvzHELrgtr4545iqB
+      YLg13/kK/KiUhuscvpciwG5Un3rjubQlipDFZoGFFXmMbFWH0sxiAT4Qed/wMKUs
+      T0BMfIqYLS23QpwhzCTpBIDOZtyNJ3TK+S/avunTAz5Dis6+e8yCVyyiLOBAIz2q
+      emBcs9uPbvxxbwXPUd3e3mes9wQrDl5VtfxFSJI0lHyS1xnojNrX+GMlhMcSgoau
+      /Uh/RkPT2lYnh0ikiF2f8Mz1R37CZ7dk/352u4xEfCGul8cytzHV++Rk45ito7Fc
+      ai6JObflljfxFg==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2025-12-29T17:25:04Z"
+    name: kube-root-ca.crt
+    namespace: default
+    resourceVersion: "330"
+    uid: 83d84a5e-d02d-49af-af42-a903ec6d24ce
+- apiVersion: v1
+  data:
+    00-create-db.sql: "CREATE DATABASE IF NOT EXISTS toolrentdb;\r\n"
+    toolrent_bd_customers.sql: "-- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)\r\n--\r\n--
+      Host: localhost    Database: toolrent_bd\r\n-- ------------------------------------------------------\r\n--
+      Server version\t8.0.43\r\n\r\n/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT
+      */;\r\n/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;\r\n/*!40101
+      SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;\r\n/*!50503 SET NAMES
+      utf8 */;\r\n/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;\r\n/*!40103 SET TIME_ZONE='+00:00'
+      */;\r\n/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;\r\n/*!40014
+      SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;\r\n/*!40101
+      SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;\r\n/*!40111
+      SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;\r\n\r\n--\r\n-- Table structure
+      for table `customers`\r\n--\r\nUSE toolrentdb;\r\n\r\nDROP TABLE IF EXISTS `customers`;\r\n/*!40101
+      SET @saved_cs_client     = @@character_set_client */;\r\n/*!50503 SET character_set_client
+      = utf8mb4 */;\r\nCREATE TABLE `customers` (\r\n  `id` varchar(36) NOT NULL,\r\n
+      \ `name` varchar(255) DEFAULT NULL,\r\n  `rut` varchar(255) NOT NULL,\r\n  `phone`
+      varchar(255) DEFAULT NULL,\r\n  `email` varchar(255) DEFAULT NULL,\r\n  `status`
+      tinytext NOT NULL,\r\n  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,\r\n
+      \ PRIMARY KEY (`id`),\r\n  UNIQUE KEY `rut` (`rut`),\r\n  UNIQUE KEY `email`
+      (`email`)\r\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\r\n/*!40101
+      SET character_set_client = @saved_cs_client */;\r\n\r\n--\r\n-- Dumping data
+      for table `customers`\r\n--\r\n\r\nLOCK TABLES `customers` WRITE;\r\n/*!40000
+      ALTER TABLE `customers` DISABLE KEYS */;\r\nINSERT INTO `customers` VALUES ('0647142a-f745-4c22-a2c3-0f6def07d4de','gdfdg','dfgdf','fddfg','fabimessi4@gmail.com','Activo','2025-09-21
+      18:50:37'),('35c896d3-877e-4784-b74e-beb687e1f1fb','Eusebio Rojas','11.053.588-0','978757056','eusebio@gmail.com','Activo','2025-09-10
+      22:26:54'),('4b94e85d-6b2e-434e-b542-21e906b5549e','Carlos Iturra','111111111','978757099','carlositurra@gmail.com','Activo','2025-09-21
+      18:44:06'),('5312eb33-81f8-11f0-8b09-00155d4a2cda','Juan Pérez','12.345.678-9','987654321','juanperez@mail.com','ACTIVE','2025-08-25
+      21:13:19'),('5312f00e-81f8-11f0-8b09-00155d4a2cda','María González','9.876.543-2','912345678','maria.gonzalez@mail.com','RESTRICTED','2025-08-25
+      21:13:19'),('5312f23b-81f8-11f0-8b09-00155d4a2cda','Carlos Ruiz','11.223.344-5','934567812','carlos.ruiz@mail.com','RESTRICTED','2025-08-25
+      21:13:19'),('66faf970-1bc5-4186-afd3-1d8b963bac2a','Juan Ignacio Pérez','46456','(9)
+      7875 7036','fabi@fabi.com','Activo','2025-09-21 22:02:34'),('7bc126f3-62e1-4a39-b682-b151b3ffc31a','dfsgdfsg','sdfgds','dsfg','dsfg@dfgs.ff','Activo','2025-09-21
+      18:48:53'),('8b8310af-fff5-47c6-b546-69a72d1d2a62','Nuevo Cliente','12.222.333-4','+56
+      9 5555 5555','nuevo@email.com','Activo','2025-09-09 22:04:23');\r\n/*!40000
+      ALTER TABLE `customers` ENABLE KEYS */;\r\nUNLOCK TABLES;\r\n/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE
+      */;\r\n\r\n/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;\r\n/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS
+      */;\r\n/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;\r\n/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT
+      */;\r\n/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;\r\n/*!40101
+      SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;\r\n/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES
+      */;\r\n\r\n-- Dump completed on 2025-12-30 14:36:46\r\n"
+    toolrent_bd_fee.sql: "-- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)\r\n--\r\n--
+      Host: localhost    Database: toolrent_bd\r\n-- ------------------------------------------------------\r\n--
+      Server version\t8.0.43\r\n\r\n/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT
+      */;\r\n/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;\r\n/*!40101
+      SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;\r\n/*!50503 SET NAMES
+      utf8 */;\r\n/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;\r\n/*!40103 SET TIME_ZONE='+00:00'
+      */;\r\n/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;\r\n/*!40014
+      SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;\r\n/*!40101
+      SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;\r\n/*!40111
+      SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;\r\n\r\n--\r\n-- Table structure
+      for table `fee`\r\n--\r\n\r\nUSE toolrentdb;\r\n\r\nDROP TABLE IF EXISTS `fee`;\r\n/*!40101
+      SET @saved_cs_client     = @@character_set_client */;\r\n/*!50503 SET character_set_client
+      = utf8mb4 */;\r\nCREATE TABLE `fee` (\r\n  `id` varchar(36) NOT NULL,\r\n  `type`
+      tinytext NOT NULL,\r\n  `value` float NOT NULL,\r\n  `createdAt` timestamp NULL
+      DEFAULT CURRENT_TIMESTAMP,\r\n  `updated_by` varchar(255) DEFAULT NULL,\r\n
+      \ PRIMARY KEY (`id`)\r\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\r\n/*!40101
+      SET character_set_client = @saved_cs_client */;\r\n\r\n--\r\n-- Dumping data
+      for table `fee`\r\n--\r\n\r\nLOCK TABLES `fee` WRITE;\r\n/*!40000 ALTER TABLE
+      `fee` DISABLE KEYS */;\r\nINSERT INTO `fee` VALUES ('89a8eddf-77de-4575-94f6-f7dc38be44de','LATE_FEE',5400,'2025-09-13
+      17:39:18',NULL);\r\n/*!40000 ALTER TABLE `fee` ENABLE KEYS */;\r\nUNLOCK TABLES;\r\n/*!40103
+      SET TIME_ZONE=@OLD_TIME_ZONE */;\r\n\r\n/*!40101 SET SQL_MODE=@OLD_SQL_MODE
+      */;\r\n/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;\r\n/*!40014
+      SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;\r\n/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT
+      */;\r\n/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;\r\n/*!40101
+      SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;\r\n/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES
+      */;\r\n\r\n-- Dump completed on 2025-12-30 14:36:46\r\n"
+    toolrent_bd_kardex.sql: "-- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)\r\n--\r\n--
+      Host: localhost    Database: toolrent_bd\r\n-- ------------------------------------------------------\r\n--
+      Server version\t8.0.43\r\n\r\n/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT
+      */;\r\n/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;\r\n/*!40101
+      SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;\r\n/*!50503 SET NAMES
+      utf8 */;\r\n/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;\r\n/*!40103 SET TIME_ZONE='+00:00'
+      */;\r\n/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;\r\n/*!40014
+      SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;\r\n/*!40101
+      SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;\r\n/*!40111
+      SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;\r\n\r\n--\r\n-- Table structure
+      for table `kardex`\r\n--\r\nUSE toolrentdb;\r\n\r\nDROP TABLE IF EXISTS `kardex`;\r\n/*!40101
+      SET @saved_cs_client     = @@character_set_client */;\r\n/*!50503 SET character_set_client
+      = utf8mb4 */;\r\nCREATE TABLE `kardex` (\r\n  `id` varchar(36) NOT NULL,\r\n
+      \ `tool_id` varchar(36) NOT NULL,\r\n  `user_id` varchar(36) NOT NULL,\r\n  `loans_id`
+      varchar(36) DEFAULT NULL,\r\n  `type` tinytext NOT NULL,\r\n  `quantity` int
+      NOT NULL,\r\n  `movement_date` date NOT NULL,\r\n  `comments` text,\r\n  `createdAt`
+      timestamp NULL DEFAULT CURRENT_TIMESTAMP,\r\n  PRIMARY KEY (`id`),\r\n  KEY
+      `user_id` (`user_id`),\r\n  KEY `loans_id` (`loans_id`),\r\n  KEY `kardex_ibfk_1`
+      (`tool_id`),\r\n  CONSTRAINT `kardex_ibfk_1` FOREIGN KEY (`tool_id`) REFERENCES
+      `tools` (`id`) ON DELETE CASCADE,\r\n  CONSTRAINT `kardex_ibfk_2` FOREIGN KEY
+      (`user_id`) REFERENCES `users` (`id`),\r\n  CONSTRAINT `kardex_ibfk_3` FOREIGN
+      KEY (`loans_id`) REFERENCES `loans` (`id`)\r\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+      COLLATE=utf8mb4_0900_ai_ci;\r\n/*!40101 SET character_set_client = @saved_cs_client
+      */;\r\n\r\n--\r\n-- Dumping data for table `kardex`\r\n--\r\n\r\nLOCK TABLES
+      `kardex` WRITE;\r\n/*!40000 ALTER TABLE `kardex` DISABLE KEYS */;\r\nINSERT
+      INTO `kardex` VALUES ('0ea31e63-7e97-495c-adad-eb4de527a64e','53139286-81f8-11f0-8b09-00155d4a2cda','5310f2ee-81f8-11f0-8b09-00155d4a2cda','e98cc4ff-b362-488a-ac87-6e325540f42a','LOAN',1,'2025-09-23',NULL,'2025-09-23
+      23:36:48'),('47493753-a57f-4afc-81f0-a75275cf7fc8','80cdd6bf-a068-46d4-ab12-836bb21eb20d','5310f2ee-81f8-11f0-8b09-00155d4a2cda','d5f40020-155e-4199-bc1b-bd66eff79b39','LOAN',1,'2025-09-23',NULL,'2025-09-23
+      23:36:33'),('d2df5f48-d551-48e0-9581-57524fbd7db5','5313917c-81f8-11f0-8b09-00155d4a2cda','5310f2ee-81f8-11f0-8b09-00155d4a2cda','3677490e-0867-457e-9f0b-b573500c7c06','LOAN',1,'2025-09-23',NULL,'2025-09-23
+      23:35:50'),('f20ddbd7-11a4-44cf-884b-aeaee705be4b','e6e12e9d-72f6-4a52-85e9-facb31365ea6','5310f2ee-81f8-11f0-8b09-00155d4a2cda','f908e498-8ac7-40e7-a9e5-8f1f079c5e3a','LOAN',1,'2025-09-23',NULL,'2025-09-23
+      23:37:03'),('fc57911c-0db4-4592-b7a7-cba31736d68e','53139310-81f8-11f0-8b09-00155d4a2cda','5310f2ee-81f8-11f0-8b09-00155d4a2cda','0ec71626-dc78-4a86-afe8-5aeeb891a29d','LOAN',1,'2025-09-23',NULL,'2025-09-23
+      23:36:14');\r\n/*!40000 ALTER TABLE `kardex` ENABLE KEYS */;\r\nUNLOCK TABLES;\r\n/*!40103
+      SET TIME_ZONE=@OLD_TIME_ZONE */;\r\n\r\n/*!40101 SET SQL_MODE=@OLD_SQL_MODE
+      */;\r\n/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;\r\n/*!40014
+      SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;\r\n/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT
+      */;\r\n/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;\r\n/*!40101
+      SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;\r\n/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES
+      */;\r\n\r\n-- Dump completed on 2025-12-30 14:36:47\r\n"
+    toolrent_bd_loans.sql: "-- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)\r\n--\r\n--
+      Host: localhost    Database: toolrent_bd\r\n-- ------------------------------------------------------\r\n--
+      Server version\t8.0.43\r\n\r\n/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT
+      */;\r\n/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;\r\n/*!40101
+      SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;\r\n/*!50503 SET NAMES
+      utf8 */;\r\n/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;\r\n/*!40103 SET TIME_ZONE='+00:00'
+      */;\r\n/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;\r\n/*!40014
+      SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;\r\n/*!40101
+      SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;\r\n/*!40111
+      SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;\r\n\r\n--\r\n-- Table structure
+      for table `loans`\r\n--\r\n\r\nUSE toolrentdb;\r\nDROP TABLE IF EXISTS `loans`;\r\n/*!40101
+      SET @saved_cs_client     = @@character_set_client */;\r\n/*!50503 SET character_set_client
+      = utf8mb4 */;\r\nCREATE TABLE `loans` (\r\n  `id` varchar(36) NOT NULL,\r\n
+      \ `client_id` varchar(36) NOT NULL,\r\n  `tool_id` varchar(36) NOT NULL,\r\n
+      \ `customers_id` varchar(36) NOT NULL,\r\n  `delivery_date` date NOT NULL,\r\n
+      \ `due_date` date NOT NULL,\r\n  `return_date` date DEFAULT NULL,\r\n  `status`
+      tinytext NOT NULL,\r\n  `fine` float DEFAULT '0',\r\n  `createdAt` timestamp
+      NULL DEFAULT CURRENT_TIMESTAMP,\r\n  PRIMARY KEY (`id`),\r\n  KEY `client_id`
+      (`client_id`),\r\n  KEY `customers_id` (`customers_id`),\r\n  KEY `loans_ibfk_2`
+      (`tool_id`),\r\n  CONSTRAINT `loans_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES
+      `users` (`id`),\r\n  CONSTRAINT `loans_ibfk_2` FOREIGN KEY (`tool_id`) REFERENCES
+      `tools` (`id`) ON DELETE CASCADE,\r\n  CONSTRAINT `loans_ibfk_3` FOREIGN KEY
+      (`customers_id`) REFERENCES `customers` (`id`)\r\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+      COLLATE=utf8mb4_0900_ai_ci;\r\n/*!40101 SET character_set_client = @saved_cs_client
+      */;\r\n\r\n--\r\n-- Dumping data for table `loans`\r\n--\r\n\r\nLOCK TABLES
+      `loans` WRITE;\r\n/*!40000 ALTER TABLE `loans` DISABLE KEYS */;\r\nINSERT INTO
+      `loans` VALUES ('0ec71626-dc78-4a86-afe8-5aeeb891a29d','5310f2ee-81f8-11f0-8b09-00155d4a2cda','53139310-81f8-11f0-8b09-00155d4a2cda','4b94e85d-6b2e-434e-b542-21e906b5549e','2025-09-24','2025-10-30',NULL,'ACTIVE',0,NULL),('3677490e-0867-457e-9f0b-b573500c7c06','5310f2ee-81f8-11f0-8b09-00155d4a2cda','5313917c-81f8-11f0-8b09-00155d4a2cda','4b94e85d-6b2e-434e-b542-21e906b5549e','2025-09-24','2025-10-14',NULL,'ACTIVE',0,NULL),('ba6cd25c-2dc2-475e-8994-d8f21c966e67','5310f2ee-81f8-11f0-8b09-00155d4a2cda','53138df7-81f8-11f0-8b09-00155d4a2cda','0647142a-f745-4c22-a2c3-0f6def07d4de','2025-12-20','2025-12-30','2025-12-30','RETURNED',0,'2025-12-20
+      16:24:20'),('d5f40020-155e-4199-bc1b-bd66eff79b39','5310f2ee-81f8-11f0-8b09-00155d4a2cda','80cdd6bf-a068-46d4-ab12-836bb21eb20d','4b94e85d-6b2e-434e-b542-21e906b5549e','2025-09-24','2025-10-03',NULL,'ACTIVE',0,NULL),('e98cc4ff-b362-488a-ac87-6e325540f42a','5310f2ee-81f8-11f0-8b09-00155d4a2cda','53139286-81f8-11f0-8b09-00155d4a2cda','4b94e85d-6b2e-434e-b542-21e906b5549e','2025-09-23','2025-09-29',NULL,'ACTIVE',0,NULL),('f908e498-8ac7-40e7-a9e5-8f1f079c5e3a','5310f2ee-81f8-11f0-8b09-00155d4a2cda','e6e12e9d-72f6-4a52-85e9-facb31365ea6','4b94e85d-6b2e-434e-b542-21e906b5549e','2025-09-24','2025-09-29',NULL,'ACTIVE',0,NULL);\r\n/*!40000
+      ALTER TABLE `loans` ENABLE KEYS */;\r\nUNLOCK TABLES;\r\n/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE
+      */;\r\n\r\n/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;\r\n/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS
+      */;\r\n/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;\r\n/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT
+      */;\r\n/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;\r\n/*!40101
+      SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;\r\n/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES
+      */;\r\n\r\n-- Dump completed on 2025-12-30 14:36:46\r\n"
+    toolrent_bd_tools.sql: "-- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)\r\n--\r\n--
+      Host: localhost    Database: toolrent_bd\r\n-- ------------------------------------------------------\r\n--
+      Server version\t8.0.43\r\n\r\n/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT
+      */;\r\n/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;\r\n/*!40101
+      SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;\r\n/*!50503 SET NAMES
+      utf8 */;\r\n/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;\r\n/*!40103 SET TIME_ZONE='+00:00'
+      */;\r\n/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;\r\n/*!40014
+      SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;\r\n/*!40101
+      SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;\r\n/*!40111
+      SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;\r\n\r\n--\r\n-- Table structure
+      for table `tools`\r\n--\r\n\r\nUSE toolrentdb;\r\n\r\nDROP TABLE IF EXISTS `tools`;\r\n/*!40101
+      SET @saved_cs_client     = @@character_set_client */;\r\n/*!50503 SET character_set_client
+      = utf8mb4 */;\r\nCREATE TABLE `tools` (\r\n  `id` varchar(36) NOT NULL,\r\n
+      \ `name` varchar(100) NOT NULL,\r\n  `category` varchar(50) NOT NULL,\r\n  `status`
+      tinytext NOT NULL,\r\n  `replacement_value` float NOT NULL,\r\n  `rental_price`
+      float NOT NULL,\r\n  `stock` int NOT NULL,\r\n  `created_at` timestamp NULL
+      DEFAULT CURRENT_TIMESTAMP,\r\n  `tool_image_url` varchar(255) DEFAULT NULL,\r\n
+      \ PRIMARY KEY (`id`)\r\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\r\n/*!40101
+      SET character_set_client = @saved_cs_client */;\r\n\r\n--\r\n-- Dumping data
+      for table `tools`\r\n--\r\n\r\nLOCK TABLES `tools` WRITE;\r\n/*!40000 ALTER
+      TABLE `tools` DISABLE KEYS */;\r\nINSERT INTO `tools` VALUES ('0f4768e1-df54-4aa3-84c2-ac580dd4c2dd','martillo
+      de oro','Manual','Disponible',5000000,5000,2,'2025-09-05 21:05:38','https://storage.googleapis.com/toolrent-bucket/martillo_de_oro.jpg'),('53138df7-81f8-11f0-8b09-00155d4a2cda','Taladro
+      Bosch','Electric','AVAILABLE',120000,5000,5,'2025-08-25 21:13:19',NULL),('5313917c-81f8-11f0-8b09-00155d4a2cda','Martillo','Manual','AVAILABLE',15000,1000,21,'2025-08-25
+      21:13:19',NULL),('53139286-81f8-11f0-8b09-00155d4a2cda','Sierra Circular','Electric','UNDER_REPAIR',90000,4000,2,'2025-08-25
+      21:13:19',NULL),('53139310-81f8-11f0-8b09-00155d4a2cda','Escalera 3m','Manual','AVAILABLE',45000,2000,12,'2025-08-25
+      21:13:19',NULL),('80cdd6bf-a068-46d4-ab12-836bb21eb20d','casco AZUL','Equipo
+      de Seguridad','Disponible',50000,500,5,'2025-09-08 23:43:49',NULL),('83f6deb0-5445-4509-a38b-bd73afa79b8a','rotomartillo','Electrica','Disponible',150000,15000,4,'2025-09-13
+      18:03:02',NULL),('e6e12e9d-72f6-4a52-85e9-facb31365ea6','Taladro de pecho manual','Manual','Disponible',600000,20000,9,'2025-09-07
+      19:16:05',NULL);\r\n/*!40000 ALTER TABLE `tools` ENABLE KEYS */;\r\nUNLOCK TABLES;\r\n/*!40103
+      SET TIME_ZONE=@OLD_TIME_ZONE */;\r\n\r\n/*!40101 SET SQL_MODE=@OLD_SQL_MODE
+      */;\r\n/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;\r\n/*!40014
+      SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;\r\n/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT
+      */;\r\n/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;\r\n/*!40101
+      SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;\r\n/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES
+      */;\r\n\r\n-- Dump completed on 2025-12-30 14:36:46\r\n"
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: "2025-12-31T02:05:46Z"
+    name: mysql-init-scripts
+    namespace: default
+    resourceVersion: "36716"
+    uid: a96c4c4f-6cbe-4ea4-9f1f-6f41ebedcdc4
+kind: List
+metadata:
+  resourceVersion: ""
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    mysql-root-password: cGFzc3dvcmQxMjM=
+    mysql-user-password: cGFzc3dvcmQxMjM=
+  kind: Secret
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Secret","metadata":{"annotations":{},"name":"db-credentials","namespace":"default"},"stringData":{"mysql-root-password":"password123","mysql-user-password":"password123"},"type":"Opaque"}
+    creationTimestamp: "2025-12-29T17:26:01Z"
+    name: db-credentials
+    namespace: default
+    resourceVersion: "433"
+    uid: 5bfd06a4-247a-41db-81cb-a99a5318a98e
+  type: Opaque
+kind: List
+metadata:
+  resourceVersion: ""
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""

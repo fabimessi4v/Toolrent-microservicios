@@ -82,7 +82,7 @@ spec:
     app: api-gateway
 
   # Tipo de Service: NodePort expone hacia fuera del cluster
-  type: ClusterIP
+  type: NodePort
 
   # Puertos del Service
   ports:
@@ -90,3 +90,4 @@ spec:
     - port: 8080
       # Puerto del contenedor al que se envía el tráfico
       targetPort: 8080
+      nodePort: 30080

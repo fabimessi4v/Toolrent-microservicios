@@ -26,6 +26,8 @@ spec:
           value: jdbc:mysql://mysql-service:3306/toolrentdb
         - name: SERVER_PORT
           value: "8080"
+        - name: SPRING_CONFIG_IMPORT
+          value: "optional:configserver:http://config-server:8888/"
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
             secretKeyRef:

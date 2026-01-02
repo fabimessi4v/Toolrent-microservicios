@@ -1,89 +1,79 @@
 apiVersion: apps/v1
-kind:  Deployment
+kind: Deployment
 metadata:
   name: keycloak
-spec:  
+spec:
   replicas: 1
   selector:
     matchLabels:
       app: keycloak
   template:
-    metadata: 
+    metadata:
       labels:
         app: keycloak
-    spec: 
+    spec:
       # Init container para crear la base de datos
       initContainers:
-      - name:  create-keycloak-db
+      - name: create-keycloak-db
         image: mysql:8.0
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
-            secretKeyRef: 
+            secretKeyRef:
               name: db-credentials
               key: mysql-root-password
-        command: 
+        command:
         - sh
         - -c
         - |
           mysql -h mysql-service -u root -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS keycloak_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
           echo "Base de datos keycloak_db creada o ya existe"
-      
-      containers: 
+
+      containers:
       - name: keycloak
         image: quay.io/keycloak/keycloak:23.0
         args:
         - "start-dev"
         ports:
-        - containerPort:  8080
-        env: 
+        - containerPort: 8080
+        env:
         # Admin credentials
         - name: KEYCLOAK_ADMIN
           value: "admin"
         - name: KEYCLOAK_ADMIN_PASSWORD
           value: "admin123"
-        
-        # ✅ MySQL configuration usando Secret
+        # MySQL configuration usando Secret
         - name: KC_DB
           value: "mysql"
         - name: KC_DB_URL
-          value: "jdbc:mysql://mysql-service:3306/keycloak_db? characterEncoding=UTF-8"
+          value: "jdbc:mysql://mysql-service:3306/keycloak_db?characterEncoding=UTF-8"
         - name: KC_DB_USERNAME
           value: "root"
         - name: KC_DB_PASSWORD
-          valueFrom: 
+          valueFrom:
             secretKeyRef:
               name: db-credentials
               key: mysql-root-password
-        
         # Hostname configuration
         - name: KC_HOSTNAME_STRICT
           value: "false"
         - name: KC_HOSTNAME_STRICT_HTTPS
           value: "false"
-        - name:  KC_HTTP_ENABLED
+        - name: KC_HTTP_ENABLED
           value: "true"
-        
         # Logging
         - name: KC_LOG_LEVEL
           value: "INFO"
-        - name: KC_HTTP_ENABLED
-  	  value: "true"
-	- name: KC_HTTPS_CERTIFICATE_FILE
-  	  value: ""
+        # Cert files (deja vacío si no usas https interno)
+        - name: KC_HTTPS_CERTIFICATE_FILE
+          value: ""
         - name: KC_HTTPS_CERTIFICATE_KEY_FILE
           value: ""
-        - name: KC_HOSTNAME_STRICT
-          value: "false"
-        - name: KC_HOSTNAME_STRICT_HTTPS
-          value: "false"
-        
-        
-        resources: 
+        resources:
           limits:
-            memory:  "1Gi"
+            memory: "1Gi"
             cpu: "1000m"
-          requests: 
+          requests:
             memory: "512Mi"
             cpu: "500m"
 
@@ -97,7 +87,7 @@ spec:
   type: NodePort
   selector:
     app: keycloak
-  ports:  
+  ports:
   - port: 8080
     targetPort: 8080
     nodePort: 30081
