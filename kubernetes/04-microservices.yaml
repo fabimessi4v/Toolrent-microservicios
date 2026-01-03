@@ -78,7 +78,7 @@ spec:
         image: fabimessidev/ms-prestamos:latest
         env:
         - name: SPRING_DATASOURCE_URL
-          value: jdbc:mysql://mysql-service:3306/loans_db
+          value: jdbc:mysql://mysql-service:3306/toolrentdb
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
             secretKeyRef:
