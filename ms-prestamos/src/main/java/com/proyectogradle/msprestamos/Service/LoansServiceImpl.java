@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -166,4 +167,10 @@ public class LoansServiceImpl {
 
         return diffDays * DAILY_LATE_FEE;
     }
+
+    public List<Loans> getAllLoans() {
+        return loanRepository.findAll();
+    }
+
+
 }

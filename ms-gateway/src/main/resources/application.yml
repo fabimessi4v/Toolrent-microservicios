@@ -26,9 +26,11 @@ spring:
 
         # Ruta para MS-LOANS (Ejemplo)
         - id: ms-loans-route
-          uri: lb://MS-LOANS
+          uri: lb://ms-loans
           predicates:
             - Path=/api/loans/**
+          filters:
+            - StripPrefix=1
 
       # CONFIGURACIÓN CORS (CRUCIAL PARA EL FRONTEND)
       globalcors:

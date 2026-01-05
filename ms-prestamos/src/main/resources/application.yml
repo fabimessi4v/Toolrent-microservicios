@@ -4,23 +4,5 @@ server:
 spring:
   application:
     name: ms-loans
-  datasource:
-    url: jdbc:mysql://${DB_HOST:localhost}:3306/toolrentdb
-    username: root
-    password: password
-
-eureka:
-  instance:
-    # ESTO ES LO QUE SOLUCIONA EL ERROR:
-    prefer-ip-address: false
-    hostname: ms-inventory
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-  client:
-    service-url:
-      # Asegúrate de que esta variable coincida con tu ConfigMap (eureka-url)
-      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
-
-management:
-  endpoints:
-    web:
-      exposure:
+  config:
+    import: optional:configserver:http://config-server:8888

@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: ms-inventory
-        image: fabimessidev/ms-inventario:latest
+        image: fabimessidev/ms-inventario:20251231-182120
         ports:
           - containerPort: 8080
         env:

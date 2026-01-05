@@ -4,12 +4,10 @@ import com.proyectogradle.msprestamos.Entities.Loans;
 import com.proyectogradle.msprestamos.Service.LoansServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -75,20 +73,12 @@ public class LoanController {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // GET /loans  (Obtener todos los préstamos)
+    @GetMapping
+    public ResponseEntity<List<Loans>> getAllLoans() {
+        List<Loans> loansList = loansService.getAllLoans();
+        return ResponseEntity.ok(loansList);
+    }
 
 
 

@@ -1,141 +1,86 @@
 ################################################################################
-# DOCUMENTO 1: ConfigMap con scripts de inicialización
-# Este ConfigMap contiene un archivo SQL que el contenedor de MySQL ejecuta
-# automáticamente al arrancar (gracias a /docker-entrypoint-initdb.d).
+# 1. ConfigMap con scripts de inicialización
 ################################################################################
-
-# Versión de la API (ConfigMap está en el “core” v1)
-apiVersion: v1
-
-# Tipo de recurso
-kind: ConfigMap
-
-# Metadatos del objeto
+apiVersion: v1                    # Versión de la API de Kubernetes para ConfigMap
+kind: ConfigMap                   # Tipo de recurso: ConfigMap
 metadata:
-  # Nombre del ConfigMap (se referenciará desde el Deployment/volumen)
-  name: mysql-init-scripts
-
-# Datos dentro del ConfigMap: claves y valores
+  name: mysql-init-scripts        # Nombre del ConfigMap, usado para referencia en el Deployment
 data:
-  # Nombre de la clave: se convertirá en un archivo dentro del volumen
-  init.sql: |
-    # SQL: crea la bases de datos si no existe
-     CREATE DATABASE IF NOT EXISTS toolrentdb;
+  init.sql: |                     # Archivo SQL que MySQL ejecuta al iniciarse
+    -- Crea la base de datos si no existe
+    CREATE DATABASE IF NOT EXISTS toolrentdb;
 
 ---
 
 ################################################################################
-# DOCUMENTO 2: Deployment de MySQL
-# Crea un Pod (replicado por defecto 1 vez) con un contenedor mysql:8.0.
-# Importante: aquí NO hay PersistentVolumeClaim, así que los datos se pierden
-# si el Pod se recrea (útil para dev, no recomendado para prod).
+# 2. PersistentVolumeClaim para almacenamiento persistente de MySQL
 ################################################################################
-
-# Versión de la API para Deployments
-apiVersion: apps/v1
-
-# Tipo de recurso
-kind: Deployment
-
-# Metadatos del Deployment
+apiVersion: v1                                  # Versión de la API para PVC
+kind: PersistentVolumeClaim                     # Tipo de recurso: PersistentVolumeClaim
 metadata:
-  # Nombre del Deployment
-  name: mysql-server
-
-# Especificación del Deployment
+  name: mysql-pvc                              # Nombre del PVC; debe coincidir con el usado en el Deployment
 spec:
-  # Selector: indica qué Pods pertenecen a este Deployment
+  accessModes:
+    - ReadWriteOnce                           # Solo un nodo puede montar este volumen en modo escritura/lectura
+  resources:
+    requests:
+      storage: 4Gi                            # Espacio solicitado para la base de datos (puedes ajustar)
+
+---
+
+################################################################################
+# 3. Deployment de MySQL con volumen persistente y script de inicialización
+################################################################################
+apiVersion: apps/v1                            # Versión de la API para Deployment
+kind: Deployment                               # Tipo de recurso: Deployment
+metadata:
+  name: mysql-server                          # Nombre del Deployment
+spec:
   selector:
-    # matchLabels debe coincidir con template.metadata.labels
     matchLabels:
-      # Etiqueta usada por Service/selector
-      app: mysql
-
-  # Template: define el Pod que se va a crear
+      app: mysql                              # Selector usado por el Service y para identificar el Pod
   template:
-    # Metadatos del Pod
     metadata:
-      # Labels que identifican al Pod
       labels:
-        # Etiqueta principal del Pod
-        app: mysql
-
-    # Especificación del Pod
+        app: mysql                            # Label para asociar con el Service y selectores
     spec:
-      # Lista de contenedores del Pod
       containers:
-      # Contenedor MySQL
-      - name: mysql
-        # Imagen Docker
-        image: mysql:8.0
-
-        # Variables de entorno para el contenedor
+      - name: mysql                           # Nombre del contenedor
+        image: mysql:8.0                      # Imagen oficial de MySQL
         env:
-        # Password de root (MySQL la requiere al primer arranque)
-        - name: MYSQL_ROOT_PASSWORD
-          # Toma el valor desde un Secret existente
+        - name: MYSQL_ROOT_PASSWORD           # Variable de entorno para la contraseña ROOT
           valueFrom:
-            # Referencia a una key dentro de un Secret
             secretKeyRef:
-              # Nombre del Secret (definido en 01-config.yaml)
-              name: db-credentials
-              # Key dentro del Secret
-              key: mysql-root-password
-
-        # Puertos expuestos por el contenedor
+              name: db-credentials           # Nombre del Secret (debe existir, no definido aquí)
+              key: mysql-root-password       # Key de la password en el Secret
         ports:
-        # Puerto MySQL dentro del contenedor
-        - containerPort: 3306
-
-        # Montajes de volúmenes dentro del contenedor
+        - containerPort: 3306                 # Puerto en el que escucha MySQL dentro del contenedor
         volumeMounts:
-        # Montaje del volumen con el SQL de inicialización
         - name: mysql-init
-          # Ruta especial que MySQL ejecuta al iniciar
-          mountPath: /docker-entrypoint-initdb.d
-
-      # Volúmenes declarados a nivel de Pod
+          mountPath: /docker-entrypoint-initdb.d   # Donde montar el SQL de inicialización para MySQL
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql                # Montaje del directorio de datos de MySQL al PVC
       volumes:
-      # Volumen llamado mysql-init
       - name: mysql-init
-        # El volumen viene de un ConfigMap
         configMap:
-          # Nombre del ConfigMap que contiene init.sql
-          name: mysql-init-scripts
+          name: mysql-init-scripts            # Volumen ConfigMap para el script init.sql
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc                # El nombre del PVC definido arriba
 
 ---
 
 ################################################################################
-# DOCUMENTO 3: Service (ClusterIP) para MySQL
-# Expone MySQL dentro del cluster con un DNS estable:
-#   mysql-service.<namespace>.svc.cluster.local
-# Permite que otros Pods se conecten a MySQL usando ese nombre.
+# 4. Service (ClusterIP) para exponer MySQL internamente en el cluster
 ################################################################################
-
-# Versión de la API (Service está en el “core” v1)
-apiVersion: v1
-
-# Tipo de recurso
-kind: Service
-
-# Metadatos del Service
+apiVersion: v1                                    # Versión de la API para Service
+kind: Service                                     # Tipo de recurso: Service
 metadata:
-  # Nombre del Service (DNS interno)
-  name: mysql-service
-
-# Especificación del Service
+  name: mysql-service                             # Nombre del Service; se usará como DNS interno
 spec:
-  # Selector: se asocia a Pods con esta etiqueta
   selector:
-    # Debe coincidir con el label del Deployment (app: mysql)
-    app: mysql
-
-  # Puertos que expone el Service
+    app: mysql                                    # Asocia el Service a los Pods con label app=mysql
   ports:
-    # Puerto del Service (lo que otros Pods usan)
-    - port: 3306
-      # Puerto destino en el contenedor
-      targetPort: 3306
-
-  # Tipo de Service: ClusterIP significa “solo accesible dentro del cluster”
-  type: ClusterIP
+    - port: 3306                                  # Puerto desde el cual el Service se expone
+      targetPort: 3306                            # Puerto del contenedor MySQL
+  type: ClusterIP                                 # Solo accesible desde dentro del cluster (seguro)

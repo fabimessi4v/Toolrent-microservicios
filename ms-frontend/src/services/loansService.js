@@ -3,7 +3,8 @@ import keycloak from '../keycloak'; // asegúrate de la ruta correcta
 
 // Ajusta el puerto/baseURL según tu backend
 const apiClient = axios.create({
-  baseURL: 'http://api-gateway-service:8080/api/v1',
+  //url del gateway
+  baseURL: 'http://192.168.39.36:30080/api',
   headers: {
     'Content-Type': 'application/json'
   }
