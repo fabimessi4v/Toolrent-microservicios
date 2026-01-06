@@ -1,9 +1,12 @@
 package com.proyectogradle.msclientes.controller;
 
+import com.proyectogradle.msclientes.dto.CustomerDTO;
 import com.proyectogradle.msclientes.entity.Customer;
 import com.proyectogradle.msclientes.services.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -14,6 +17,14 @@ public class CustomerController {
     public CustomerController(CustomerService service) {
         this.service = service;
     }
+
+    // ✅ NUEVO: Endpoint para obtener todos los customers como DTO
+    @GetMapping("/dto")
+    public ResponseEntity<List<CustomerDTO>> getAllCustomersDTO() {
+        return ResponseEntity.ok(service.getAllCustomersDTO());
+    }
+
+
 
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {

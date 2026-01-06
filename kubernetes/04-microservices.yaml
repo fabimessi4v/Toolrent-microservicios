@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: ms-inventory
-        image: fabimessidev/ms-inventario:20251231-182120
+        image: fabimessidev/ms-inventory:20260104-133413
         ports:
           - containerPort: 8080
         env:
@@ -103,3 +103,166 @@ spec:
     - port: 8080
       targetPort: 8080
   type: ClusterIP
+  
+  
+################################################################################
+# MS CUSTOMERS
+################################################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: ms-customers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-customers
+  template:
+    metadata:
+      labels:
+        app: ms-customers
+    spec: 
+      containers:
+      - name: ms-customers
+        image:  fabimessidev/ms-customers:latest
+        ports:
+          - containerPort: 8080
+        env:
+        - name:  SPRING_DATASOURCE_URL
+          value: jdbc:mysql://mysql-service:3306/toolrentdb
+        - name: SERVER_PORT
+          value: "8080"
+        - name:  SPRING_CONFIG_IMPORT
+          value: "optional:configserver:http://config-server:8888/"
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-root-password
+        - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          valueFrom: 
+            configMapKeyRef: 
+              name: global-config
+              key: eureka-url
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-customers
+spec: 
+  selector:
+    app: ms-customers
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP
+
+################################################################################
+# MS KARDEX
+################################################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:  
+  name: ms-kardex
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: ms-kardex
+  template:
+    metadata:
+      labels:
+        app: ms-kardex
+    spec:  
+      containers:
+      - name: ms-kardex
+        image:   fabimessidev/ms-kardex:latest
+        ports:
+          - containerPort: 8080
+        env:
+        - name:   SPRING_DATASOURCE_URL
+          value: jdbc:mysql://mysql-service:3306/toolrentdb
+        - name:  SERVER_PORT
+          value: "8080"
+        - name:   SPRING_CONFIG_IMPORT
+          value: "optional:configserver:http://config-server:8888/"
+        - name:  SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-root-password
+        - name:  EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          valueFrom:  
+            configMapKeyRef:  
+              name: global-config
+              key: eureka-url
+
+---
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: ms-kardex
+spec: 
+  selector: 
+    app: ms-kardex
+  ports:
+    - port:  8080
+      targetPort:  8080
+  type: ClusterIP
+  
+################################################################################
+# MS FEES
+################################################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:  
+  name: ms-fees
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app:  ms-fees
+  template: 
+    metadata:
+      labels: 
+        app: ms-fees
+    spec:  
+      containers: 
+      - name: ms-fees
+        image:  fabimessidev/ms-fees:latest
+        ports: 
+          - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://mysql-service:3306/toolrentdb
+        - name:  SERVER_PORT
+          value: "8080"
+        - name:  SPRING_CONFIG_IMPORT
+          value: "optional:configserver:http://config-server:8888/"
+        - name:  SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-root-password
+        - name:  EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          valueFrom:  
+            configMapKeyRef:  
+              name: global-config
+              key: eureka-url
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:  
+  name: ms-fees
+spec: 
+  selector:  
+    app: ms-fees
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type:  ClusterIP

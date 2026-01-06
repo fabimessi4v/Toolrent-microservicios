@@ -7,8 +7,11 @@ import org.springframework.stereotype.Repository;
 
 
 import com.proyectogradle.msmontosytarifas.enitity.fee;
+
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface feeRepository extends JpaRepository<fee, String> {
-    // Add custom query methods if needed, for example:
-    // List<Fee> findByStatus(String status);
+    Optional<fee> findByType(String type);
 }

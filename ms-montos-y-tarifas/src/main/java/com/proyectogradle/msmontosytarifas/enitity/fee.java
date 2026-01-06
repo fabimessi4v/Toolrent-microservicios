@@ -6,31 +6,29 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "fee")
 public class fee {
     @Id
-    @Column(name = "id", nullable = false, length = 36)
+    @Column(name = "id", length = 36)
     private String id;
 
-    @Column(name = "customers_id", nullable = false, length = 36)
-    private String customerId; // UUID del cliente (MS-Clientes)
-
-    @Column(name = "loans_id", nullable = false, length = 36)
-    private String loanId; // UUID del préstamo (MS-Loans)
-
-    @Column(name = "type", nullable = false)
-    private String type; // "LATE_FEE", "REPLACEMENT_CHARGE", "RENT_CHARGE"
+    @Column(name = "type", nullable = false, columnDefinition = "TINYTEXT")
+    private String type;
 
     @Column(name = "value", nullable = false)
     private Float value;
 
-    @Column(name = "createdAt")
-    private Instant createdAt;
+    @Column(name = "createdAt", insertable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-    // Getters y Setters manuales
+    @Column(name = "updated_by")
+    private String updatedBy;
 
+    public fee(String string, String type, Float value) {
+    }
 
     public String getId() {
         return id;
@@ -38,22 +36,6 @@ public class fee {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getLoanId() {
-        return loanId;
-    }
-
-    public void setLoanId(String loanId) {
-        this.loanId = loanId;
     }
 
     public String getType() {
@@ -72,11 +54,19 @@ public class fee {
         this.value = value;
     }
 
-    public Instant getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 }

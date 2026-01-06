@@ -43,7 +43,7 @@ spec:
       - name: api-gateway
 
         # Imagen Docker del gateway
-        image: fabimessidev/api-gateway:latest
+        image: fabimessidev/api-gateway-service:20260103-202726
 
         # Variables de entorno (Spring Boot las mapea a propiedades)
         env:

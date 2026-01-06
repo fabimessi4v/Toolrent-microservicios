@@ -17,7 +17,7 @@ public class InventoryIntegrationService { // Service that integrates with the i
 
     public boolean checkAvailability(String toolId) { // Checks if a tool is available in inventory
         try { // Start try block to catch call failures
-            // Construye: http://localhost:8081/api/tools/{id}/availability
+            // Construye: http://ms-inventory::8081/api/tools/{id}/availability
             String url = inventoryServiceUrl + toolId + "/availability"; // Build the availability endpoint URL
             System.out.println(">>>> MS_PRESTAMOS: Intentando llamar a: " + url);
             Boolean response = restTemplate.getForObject(url, Boolean.class); // Perform GET and expect a Boolean response

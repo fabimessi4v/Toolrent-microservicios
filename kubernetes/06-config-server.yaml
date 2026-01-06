@@ -17,18 +17,9 @@ spec:
         image: fabimessidev/config-server:latest
         imagePullPolicy:  Always
         env:
-        - name: EUREKA_URL
-          value: "http://eureka-service:8761/eureka/"
         # ✅ URL CORRECTA del repositorio (ahora público)
         - name: CONFIG_GIT_URI
           value: "https://github.com/Fabimessi4v/Toolrent-microservicios"
-           # ✅ AÑADIDO: Forzar puerto (por si falla el application. properties)
-        - name: SERVER_PORT
-          value: "8888"
-          # ✅ AÑADIDO: Nombre de la aplicación
-        - name: SPRING_APPLICATION_NAME
-          value: "ms-config-server"
-        
         # ✅ AÑADIDO: Hacer que Config Server inicie SIN esperar Eureka
         - name:  EUREKA_CLIENT_ENABLED
           value: "false"
@@ -38,13 +29,13 @@ spec:
           httpGet:
             path: /actuator/health
             port: 8888
-          initialDelaySeconds: 60
+          initialDelaySeconds: 90
           periodSeconds: 10
         readinessProbe: 
           httpGet:
             path: /actuator/health
             port: 8888
-          initialDelaySeconds: 30
+          initialDelaySeconds: 60
           periodSeconds: 5
 ---
 apiVersion: v1

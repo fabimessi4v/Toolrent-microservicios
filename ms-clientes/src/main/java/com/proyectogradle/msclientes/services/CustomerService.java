@@ -1,5 +1,6 @@
 package com.proyectogradle.msclientes.services;
 
+import com.proyectogradle.msclientes.dto.CustomerDTO;
 import com.proyectogradle.msclientes.entity.Customer;
 import com.proyectogradle.msclientes.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
@@ -45,4 +47,25 @@ public class CustomerService {
         customer.setStatus(newStatus.toUpperCase());
         return repository.save(customer);
     }
+    // ✅ NUEVO: Obtener todos los customers como DTO
+    public List<CustomerDTO> getAllCustomersDTO() {
+        return repository.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+    // Método auxiliar para convertir Entity a DTO
+    private CustomerDTO convertToDTO(Customer customer) {
+        return new CustomerDTO(
+                customer.getId(),
+                customer.getName(),
+                customer.getRut(),
+                customer.getPhone(),
+                customer.getEmail(),
+                customer.getStatus(),
+                customer.getCreatedAt()
+        );
+    }
+
+
+
 }
